@@ -1,0 +1,15 @@
+.title {
+    margin: 0 0 1rem 0;
+    font-weight: 500;
+    line-height: 2.75rem;
+    font-size: 2.25rem;
+}
+
+.subtitle{
+    margin: 0;
+    font-weight: 400;
+}
+
+.header {
+    margin-top: 8rem;
+}

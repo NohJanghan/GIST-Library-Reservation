@@ -57,7 +57,7 @@ const IndexPage = () => {
           <Header>
             <Header.Title><strong>GIST 도서관</strong>에<br/>로그인 해주세요</Header.Title>
           </Header>
-          <div className={logInFormContainer} style={{marginTop: "20dvh"}}>
+          <div className={logInFormContainer} style={{marginTop: "10dvh"}}>
             {/* TODO: 로그인 폼 디자인 필요함*/}
             <form>
                 <div>

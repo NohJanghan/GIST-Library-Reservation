@@ -41,3 +41,15 @@
 .activatedLink {
     color: #DC2314;
 }
+
+.active {
+    display: none;
+}
+
+.activatedLink .active {
+    display: block;
+}
+
+.activatedLink .inactive {
+    display: none;
+}

@@ -8,6 +8,9 @@ import Header from "../components/header"
 import "swiper/css";
 import "swiper/css/pagination";
 import { logInFormContainer } from "../styles/logInForm.module.css"
+import { login } from "../scripts/libraryRequest"
+import { navigate } from "gatsby"
+import { useCookies } from "react-cookie"
 
 
 const IndexPage = () => {
@@ -22,13 +25,36 @@ const IndexPage = () => {
       [e.target.name]: e.target.value
     })
   }
+  
+  const [cookies, setCookie, removeCookie] = useCookies(['accessToken', 'refreshToken', 'tokenType', 'userId'])
+  async function onClickLogin(e) {
+    console.log('[Login] try to login')
+    if(e.target.disabled) {
+      alert("로그인중입니다.")
+      return false
+    }
 
-  function login(e) {
-    console.log('try to login')
     e.target.disabled = true
-    // await login(userData)
-    // TODO: 로그인 함수 구현 필요
-    e.target.disabled = false
+    // 로그인 처리
+    const userId = userData.id
+    await login(userData.id, userData.pw).then((res) => {
+      if(res.status === 400 || res.status === 401) {
+        alert("입력한 정보를 다시 확인해주세요.")
+        e.target.disabled = false
+      } else if(res.status === 200) {
+        setCookie('accessToken', res.data['access_token'], {path: '/', maxAge: res.data['expires_in']})
+        setCookie('refreshToken', res.data['refresh_token'])
+        setCookie('tokenType', res.data['token_type'])
+        setCookie('userId', userId)
+        navigate('/reservation')
+      } else {
+        throw new Error(res)
+      }
+    }).catch((err) => {
+      alert('로그인에 실패했습니다. 다시 시도해주세요.')
+      e.target.disabled = false
+      console.error(err)
+    })
   }
   return (
     <Swiper
@@ -66,7 +92,7 @@ const IndexPage = () => {
                 <div>
                   <input onChange={onInputChange} value={userData.pw} placeholder="Password" type="password" name="pw"/>
                 </div>
-                <button onClick={login} type="button">Log in</button>
+                <button onClick={onClickLogin} type="button">Log in</button>
               </form>
           </div>
         </Layout>

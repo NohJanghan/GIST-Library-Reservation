@@ -2,8 +2,8 @@ import React, { useState } from "react"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { Pagination } from "swiper/modules"
 
-import Layout from "../components/layout"
 import Header from "../components/header"
+import Layout from "../components/layout"
 
 import "swiper/css";
 import "swiper/css/pagination";

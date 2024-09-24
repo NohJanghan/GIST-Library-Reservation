@@ -1,11 +1,11 @@
 import { Link } from "gatsby"
 import React from "react"
-import Calendar from "../images/NavBar/Calendar.svg"
 import ActiveCalendar from "../images/NavBar/active/Calendar.svg"
-import List from "../images/NavBar/List.svg"
 import ActiveList from "../images/NavBar/active/List.svg"
-import Settings from "../images/NavBar/Settings.svg"
 import ActiveSettings from "../images/NavBar/active/Settings.svg"
+import Calendar from "../images/NavBar/Calendar.svg"
+import List from "../images/NavBar/List.svg"
+import Settings from "../images/NavBar/Settings.svg"
 
 import * as style from "../styles/navbar.module.css"
 

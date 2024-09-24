@@ -230,3 +230,6 @@ sketch
 # .pnp.*
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,visualstudiocode,react,gatsby,node,yarn
+
+# 추가적으로 설정
+apiTest.js

@@ -233,3 +233,5 @@ sketch
 
 # 추가적으로 설정
 apiTest.js
+.env*
+!.env.example

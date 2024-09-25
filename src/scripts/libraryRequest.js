@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios'
 
-const requestUrl = 'https://n1ba6bpzj7.execute-api.ap-northeast-2.amazonaws.com/default/'
+const requestUrl = process.env.GATSBY_PROXY_SERVER_URL
 
 function httpResponseHandler(res) {
     console.log(`[HttpRequest Done] ${res.status} | ${JSON.stringify(res.data)}`)

@@ -25,7 +25,7 @@ export default function Reservation() {
     }
 
     // 마운트 될때 한 번만 실행
-    const [cookies, setCookie, removeCookie] = useCookies(['userId'])
+    const [cookies, , removeCookie] = useCookies(['userId'])
     useEffect(() => {
         console.log('[useEffect]')
         if(!cookies.userId) {

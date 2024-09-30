@@ -1,3 +1,5 @@
+@import './vars.css';
+
 .buttonContainer {
     display: flex;
     flex-direction: row;
@@ -8,11 +10,11 @@
 }
 
 .buttonContainer button {
-    background: #DC2314;
+    background-color: var(--theme-color);
     box-shadow: 0px 4px 0.5rem rgba(0, 0, 0, 0.25);
     border-radius: 12px;
     padding: 0.75rem 1.75rem;
     font-size: 1rem;
-    color: white;
-    border: solid #aa1111 1px;
+    color: var(--white-text-color);
+    border: solid var(--theme-secondary) 1px;
 }

@@ -1,3 +1,5 @@
+@import './vars.css';
+
 .tab > img {
     height: 1.5rem;
     width: 1.5rem;
@@ -29,7 +31,7 @@
 
     margin: 1rem;
 
-    color: black;
+    color: var(--text-color);
     text-decoration: none;
 }
 
@@ -39,7 +41,7 @@
 }
 
 .activatedLink {
-    color: #DC2314;
+    color: var(--theme-color);
 }
 
 .active {

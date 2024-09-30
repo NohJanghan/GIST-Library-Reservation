@@ -106,7 +106,7 @@ export default function Reservation() {
         }
         console.log('[Remain Reserve Count] ' + remainCount)
         console.log("Selected Date: " + selectedDate)
-        navigate('/reservation/select', {state: {selectedDate: selectedDate}})
+        navigate('/reservation/select', {state: {selectedDate: selectedDate, userData: {...userData, infoCount: userData.infoCount[infoCountIndex]}}})
 
     }
     

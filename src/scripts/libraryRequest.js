@@ -2,6 +2,11 @@ import axios, { AxiosError } from 'axios'
 
 const requestUrl = process.env.GATSBY_PROXY_SERVER_URL
 
+// 날짜를 YYYYMMDD로 변환
+export function toYYYYMMDD(date) {
+    return `${date.getFullYear()}${(date.getMonth() + 1).toString().padStart(2, '0')}${date.getDate().toString().padStart(2,'0')}`
+}
+
 function httpResponseHandler(res) {
     console.log(`[HttpRequest Done] ${res.status} | ${JSON.stringify(res.data)}`)
     // 예외처리는 실제로 데이터 처리하는 곳에서 하기로 함
@@ -69,8 +74,8 @@ export async function refresh(refresh_token) {
 export async function getReservedDates(userId, startDate, endDate, roomId) {
     let data = {}
     const params = {
-        START_DT: startDate,
-        END_DT: endDate,
+        START_DT: toYYYYMMDD(startDate),
+        END_DT: toYYYYMMDD(endDate),
         ROOM_ID: roomId
     }
     await axios.get(requestUrl + "api/v1/mylibrary/facilityreservation/" + userId,{params: params}
@@ -82,7 +87,7 @@ export async function getReservedDates(userId, startDate, endDate, roomId) {
 
 export async function getUserInfo(userId, targetDate = undefined) {
     let data = {}
-    const params = targetDate ? {RES_YYYYMMDD: targetDate} : {}
+    const params = targetDate ? {RES_YYYYMMDD: toYYYYMMDD(targetDate)} : {}
 
     await axios.get(requestUrl + "api/v1/mylibrary/facilityreservation/info/" + userId, {params: params})
         .then(httpResponseHandler).then((body) => data = body).catch((err) => {
@@ -94,12 +99,25 @@ export async function getUserInfo(userId, targetDate = undefined) {
 // 방 정보 요청
 export async function getRoomInfo(userId, roomId, date) {
     let data = {}
+    const startDate = (() => {
+        let t = new Date(date)
+        t.setHours(0,0,0,0)
+        t.setDate(1)
+        return toYYYYMMDD(t)
+    }) ()
+    const endDate = (() => {
+        let t = new Date(date)
+        t.setHours(0,0,0,0)
+        t.setDate(1)
+        t.setMonth(t.getMonth() + 1)
+        return toYYYYMMDD(t)
+    }) ()
     const params = {
         ROOM_ID: roomId,
-        RES_YYYYMMDD: date
+        RES_YYYYMMDD: toYYYYMMDD(date),
         // 아래는 뭐하는 파라미터인지 모르겠음.
-        // START_DT_YYYYMMDD
-        // END_DT_YYYYMMDD
+        START_DT_YYYYMMDD: startDate,
+        END_DT_YYYYMMDD: endDate
     }
 
     await axios.get(requestUrl + "api/v1/mylibrary/facilityreservation/room/" + userId, {params: params}).then((res) => res.data)
@@ -116,7 +134,7 @@ export async function reserveRoom(userId, roomId, date, time, remark = '', isAdm
         CREATE_ID: userId,
         REMARK: remark,
         RES_HOUR: time,
-        RES_YYYYMMDD: date,
+        RES_YYYYMMDD: toYYYYMMDD(date),
         ROOM_ID: roomId
     }
 

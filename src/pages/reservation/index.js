@@ -10,10 +10,6 @@ import { navigate } from "gatsby"
 import { getUserInfo } from "../../scripts/libraryRequest"
 import { useCookies } from "react-cookie"
 
-// 날짜를 YYYYMMDD로 변환
-function toYYYYMMDD(date) {
-    return `${date.getFullYear()}${(date.getMonth() + 1).toString().padStart(2, '0')}${date.getDate().toString().padStart(2,'0')}`
-}
 
 export default function Reservation() {
     const [selectedDate, setSelectedDate] = useState(new Date())
@@ -42,7 +38,7 @@ export default function Reservation() {
             a.setMonth(a.getMonth() + 1)
             return a
         }) ()
-        Promise.all([getUserInfo(userId, toYYYYMMDD(today)), getUserInfo(userId, toYYYYMMDD(nextMonthDate))]).then(([res1, res2]) => {
+        Promise.all([getUserInfo(userId, today), getUserInfo(userId, nextMonthDate)]).then(([res1, res2]) => {
             if(res1.status === 200 && res1.data.info[0].USER_ID === userId.toString() && res2.status === 200 && res2.data.info[0].USER_ID === userId.toString()) {
                 let dataTmp = {...res1.data}
                 dataTmp.infoCount = [dataTmp.infoCount]

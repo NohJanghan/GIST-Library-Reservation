@@ -46,13 +46,18 @@ export default function TimeSelector(props) {
     function getTimeSlotArray(startHour, endHour) {
         let resArr = []
         for(let i = startHour; i < endHour; i++) {
-            let className = 'ts_normal'
+            let className = 'ts_timeslot ts_normal'
 
             // 선택된 요소에 대한 class 지정
             if(props.selectedRange.length === 2 && i >= Math.min(...props.selectedRange) && i <= Math.max(...props.selectedRange)) {
-                className = 'ts_selected'
-                if(i === props.selectedRange[0] || i === props.selectedRange[1]) {
-                    className = className + ' ts_onBoundary'
+                className = 'ts_timeslot ts_selected'
+                 // 경계일 경우 특수하게 처리
+                // 범위가 아닌 하나의 시간만 처리할 수도 있으므로 else if 대신 if 사용
+                if(i === Math.max(...props.selectedRange)) {
+                    className = className + ' ts_onBoundary ts_onHighBoundary'
+                }
+                if(i === Math.min(...props.selectedRange)) {
+                    className = className + ' ts_onBoundary ts_onLowBoundary'
                 }
             }
             resArr.push(<TimeSelector.TimeSlot key={i}  onClick={onSlotClicked} className={className}>{i}</TimeSelector.TimeSlot>)

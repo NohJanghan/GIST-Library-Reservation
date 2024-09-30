@@ -1,0 +1,48 @@
+@import './vars.css';
+
+.ts_container {
+    display: flex;
+    flex-direction: row;
+
+    background-color: var(--background-secondary-color);
+    overflow: auto;
+
+    border-radius: 8px;
+    cursor: pointer;
+
+    -ms-overflow-style: none;  /*IE, Edge*/
+    scrollbar-width: none; /*Firefox*/
+}
+
+.ts_container::-webkit-scrollbar {
+    display: none; /*Chrome, Safari, Opera*/
+    width: 0px;
+} 
+
+.ts_timeslot {
+    padding: 8px 8px 8px 8px;
+}
+
+.ts_normal {
+    color: var(--text-color);
+    
+}
+
+.ts_selected {
+    color: var(--theme-color);
+    background-color: var(--theme-secondary-color);
+}
+
+.ts_onBoundary {
+    font-weight: 600;
+}
+
+.ts_onLowBoundary {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.ts_onHighBoundary {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}

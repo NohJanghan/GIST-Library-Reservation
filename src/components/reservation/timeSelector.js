@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import '../styles/timeSelector.css'
+import '../../styles/timeSelector.css'
 
 export default function TimeSelector(props) {
     // props type

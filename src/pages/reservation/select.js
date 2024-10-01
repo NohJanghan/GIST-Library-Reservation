@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import Header from '../../components/header'
 import Layout from '../../components/layout'
-import TimeSelector from '../../components/timeSelector'
+import TimeSelector from '../../components/reservation/timeSelector'
 import { navigate } from 'gatsby'
 import { getRoomInfo } from '../../scripts/libraryRequest'
 

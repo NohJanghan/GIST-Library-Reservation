@@ -21,6 +21,11 @@
 
 .ts_timeslot {
     padding: 8px 8px 8px 8px;
+    display: block;
+    width: 1.25rem;
+    height: 1.25rem;
+    flex-shrink: 0;
+    text-align: center;
 }
 
 .ts_normal {

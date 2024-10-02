@@ -233,5 +233,6 @@ sketch
 
 # 추가적으로 설정
 apiTest.js
+localTest.js
 .env*
 !.env.example

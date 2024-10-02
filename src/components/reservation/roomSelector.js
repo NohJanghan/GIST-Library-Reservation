@@ -29,6 +29,7 @@ import React from "react";
 import Chevron from "../../images/Selector/ChevronRight.svg"
 import TimeSelector from "./timeSelector";
 
+import "../../styles/roomSelector.css"
 export default function RoomSelector(props) {
 
     const {isOpened, selectedRange, status, onOpen, onSelectRange, onClickReserve, onClickSelectRoom, item} = props
@@ -52,8 +53,10 @@ export default function RoomSelector(props) {
                     timeRange={item.timeRange}
                     maxRange={item.maxRange}
                 />
-                <button type='button' onClick={selectRoomHandler}>호실 선택</button>
-                <button type='button' onClick={reserveHandler}>바로 예약하기</button>
+                <div className='rs_buttonContainer'>
+                    <button type='button' class='rs_secondary' onClick={selectRoomHandler}>호실 선택</button>
+                    <button type='button' class='rs_primary'onClick={reserveHandler}>바로 예약하기</button>
+                </div>
             </div>
         } else if(status === 'disabled') {
             return <div className="rs_bottomSection">
@@ -80,11 +83,11 @@ export default function RoomSelector(props) {
     }
 
     return <div className='rs_container'>
-        <div className="rs_header" onClick={openHandler}>
+        <div className="rs_header" onClick={openHandler} role='menuitem' tabIndex='0'>
             {/* TODO: onclick 애니메이션*/}
             <img alt="open/close" src={Chevron} />
-            <span>{item.displayName}</span>
-            <span>{item.floor + 'F'}</span>
+            <span className='rs_title'>{item.displayName}</span>
+            <span className='rs_floor'>{item.floor + 'F'}</span>
         </div>
         {isOpened && BottomSection(status, onClickReserve, onClickSelectRoom, onSelectRange, selectedRange, item)}
     </div>

@@ -35,7 +35,7 @@ export default function TimeSelector(props) {
         
         // 예약할 수 있는 범위를 넘으면 안됨
         // 만약 넘을 경우 새로 선택한 것만 선택
-        if(Math.max(...newRange) - Math.min(...newRange) > props.maxRange) {
+        if(Math.max(...newRange) - Math.min(...newRange) + 1> props.maxRange) {
             newRange[0] = Number(event.target.innerText)
             newRange[1] = Number(event.target.innerText)
         }

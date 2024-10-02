@@ -37,6 +37,7 @@
 .ts_selected {
     background-color: var(--theme-color);
     color: var(--white-text-color);
+    border-right: 1px solid var(--theme-color);
 }
 
 /* .ts_onBoundary {

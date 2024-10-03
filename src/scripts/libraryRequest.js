@@ -120,7 +120,7 @@ export async function getRoomInfo(userId, roomId, date) {
         END_DT_YYYYMMDD: endDate
     }
 
-    await axios.get(requestUrl + "api/v1/mylibrary/facilityreservation/room/" + userId, {params: params}).then((res) => res.data)
+    await axios.get(requestUrl + "api/v1/mylibrary/facilityreservation/room/" + userId, {params: params})
         .then(httpResponseHandler).then((body) => data = body).catch((err) => {
             data = axiosErrorHandler(err)
         })

@@ -49,7 +49,7 @@ export async function login(id, pw) {
     // 포스트 요청에 param을 넘기기 위해서 data에 null을 전달해야함
     await axios.post(requestUrl + "oauth/token", params, {headers: {"Content-Type": 'application/x-www-form-urlencoded'}}, {
         // withCredentials: true // HTTPonly Cookie 설정을 위함. but 도서관 서버에서 쿠키를 안씀.
-    }).then(httpResponseHandler).then((body) => data = body).catch((err) => {
+    }).then(httpResponseHandler).then((res) => data = res).catch((err) => {
         data = axiosErrorHandler(err)
     })
     return data
@@ -65,7 +65,7 @@ export async function refresh(refresh_token) {
     // 포스트 요청에 param을 넘기기 위해서 data에 null을 전달해야함
     await axios.post(requestUrl + "oauth/token", params, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}, {
         // withCredentials: true // HTTPonly Cookie 설정을 위함. but 도서관 서버에서 쿠키를 안씀.
-    }).then(httpResponseHandler).then((body) => data = body).catch((err) => {
+    }).then(httpResponseHandler).then((res) => data = res).catch((err) => {
         data = axiosErrorHandler(err)
     })
     return data
@@ -79,7 +79,7 @@ export async function getReservedDates(userId, startDate, endDate, roomId) {
         ROOM_ID: roomId
     }
     await axios.get(requestUrl + "api/v1/mylibrary/facilityreservation/" + userId,{params: params}
-    ).then(httpResponseHandler).then((body) => data = body).catch((err) => {
+    ).then(httpResponseHandler).then((res) => data = res).catch((err) => {
         data = axiosErrorHandler(err)
     })
     return data.result
@@ -90,7 +90,7 @@ export async function getUserInfo(userId, targetDate = undefined) {
     const params = targetDate ? {RES_YYYYMMDD: toYYYYMMDD(targetDate)} : {}
 
     await axios.get(requestUrl + "api/v1/mylibrary/facilityreservation/info/" + userId, {params: params})
-        .then(httpResponseHandler).then((body) => data = body).catch((err) => {
+        .then(httpResponseHandler).then((res) => data = res).catch((err) => {
             data = axiosErrorHandler(err)
         })
     return data
@@ -121,7 +121,7 @@ export async function getRoomInfo(userId, roomId, date) {
     }
 
     await axios.get(requestUrl + "api/v1/mylibrary/facilityreservation/room/" + userId, {params: params})
-        .then(httpResponseHandler).then((body) => data = body).catch((err) => {
+        .then(httpResponseHandler).then((res) => data = res).catch((err) => {
             data = axiosErrorHandler(err)
         })
     return data

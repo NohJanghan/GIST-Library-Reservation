@@ -9,6 +9,8 @@ import pAll from 'p-all'
 export default function Select({ location }) {
     const [selectedTimeRange, setSelectedTimeRange] = useState([])
     const requestConcurrency = 4
+    const requestBaseDelay = 50
+    const requestMaxTrial = 4
     let possibleTimeRange = [0, 24]
 
     const userData = location.state.userData
@@ -39,7 +41,28 @@ export default function Select({ location }) {
             //     ROOM_GROUP
             // }
             if(elem.ROOM_GROUP !== -1) {
-                dataPromises.push(() => getRoomInfo(userData.info[0].USER_ID, elem.ROOM_ID, selectedDate))
+                // 실패할 경우 exponential backoff 이용하여 재시도
+                const requestData = async (trial = 1) => {
+                    const res = await getRoomInfo(userData.info[0].USER_ID, elem.ROOM_ID, selectedDate)
+
+                    if(res.status === 503) {
+                        if(trial < requestMaxTrial) {
+                            if(process.env.NODE_ENV === "development") {
+                                console.warn(`[HTTP Error 503] (in GetRoomInfo) trial: ${trial}, roomId: ${elem.ROOM_ID}`)
+                            }
+                            const delay = requestBaseDelay * Math.pow(2, trial)
+                            await new Promise((resolve) => setTimeout(resolve, delay))
+                            return requestData(trial + 1)
+                        } else {
+                            throw new Error(`[HTTP Error 503] (in GetRoomInfo) Exceeded maxTrial(trial: ${trial}), roomId: ${elem.ROOM_ID}`)
+                        }
+                    } else if(res.status >= 200 && res.status < 300) {
+                        return res
+                    } else {
+                        throw Error(`[HTTP Error ${res.status}]`)
+                    }
+                }
+                dataPromises.push(requestData)
             }
         }
 

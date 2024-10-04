@@ -44,8 +44,8 @@ export default function Select({ location }) {
 
         pAll(dataPromises, {concurrency: 4}).then((resArr) => {
             let newFacilityData = {facilityGroups: [], reserveCount: {}}
-            for(const f of resArr) {
-                for(const roomGroup of f.data.normalRoomGroupDates) {
+            for(const res of resArr) {
+                for(const roomGroup of res.data.normalRoomGroupDates) {
                     // 새로운 그룹의 방이면 그룹 정보를 가져옴
                     if(!newFacilityData.facilityGroups.map(x => x.groupId).includes(roomGroup)) {
                         const newGroup = {}
@@ -64,15 +64,15 @@ export default function Select({ location }) {
                         userReservedTimes: []
                     }
                     // 내가 예약한 시간을 newRoomData.userReservedTimes에 넣음
-                    for(const myReservation of f.data.room) {
+                    for(const myReservation of res.data.room) {
                         newRoomData.userReservedTimes.push(myReservation.RES_HOUR)
                     }
                     // 다른 사람이 예약한 내역을 ~.disabledTimes에 넣음
-                    for(const otherReservation of f.data.roomOther) {
+                    for(const otherReservation of res.data.roomOther) {
                         newRoomData.disabledTimes.push(otherReservation.RES_HOUR)
                     }
                     // 예약 불가능한 시간을 ~.disabledTimes에 넣음
-                    for(const disabledTime of f.data.notAvailableRoomDates) {
+                    for(const disabledTime of res.data.notAvailableRoomDates) {
                         const from = disabledTime.FROM_TIME
                         const to = disabledTime.TO_TIME === 0 ? 24 : disabledTime.TO_TIME
                         for(let i = from; i < to; i++) {
@@ -85,8 +85,8 @@ export default function Select({ location }) {
                 }
 
                 // 내가 예약한 시간
-                newFacilityData.reserveCount.DayReservationCount = f.data.infoCountDay
-                newFacilityData.reserveCount.MonthReservationCount = f.data.infoCount
+                newFacilityData.reserveCount.DayReservationCount = res.data.infoCountDay
+                newFacilityData.reserveCount.MonthReservationCount = res.data.infoCount
             }
 
             setFacilityData(newFacilityData)

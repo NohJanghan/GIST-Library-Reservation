@@ -11,7 +11,7 @@ export default function Select({ location }) {
     const requestConcurrency = 4
     const requestBaseDelay = 50
     const requestMaxTrial = 4
-    let possibleTimeRange = [0, 24]
+    const [possibleTimeRange, setPossibleTimeRange] = useState([8,23])
     const maxRange = useRef(0)
 
     const userData = location.state.userData
@@ -61,6 +61,7 @@ export default function Select({ location }) {
         // 요청한 방 정보 처리
         pAll(dataPromises, {concurrency: requestConcurrency}).then((resArr) => {
             let newFacilityData = {facilityGroups: [], reserveCount: {}}
+            const newPossibleTimeRange = [1000, -1000] //min/max 를 했을때 반드시 바뀔 값으로 초기화
             for(const res of resArr) {
                 for(const roomGroup of res.data.normalRoomGroupDates) {
                     // 새로운 그룹의 방이면 그룹 정보를 가져옴
@@ -72,6 +73,13 @@ export default function Select({ location }) {
                         newGroup.timeRange = [roomGroup.FROM_TIME, roomGroup.TO_TIME]
                         newGroup.room= []
                         newFacilityData.facilityGroups.push(newGroup)
+                    }
+                    // 가장 긴 시간 범위를 선택 가능한 최대 시간 범위로 설정
+                    if(roomGroup.FROM_TIME < newPossibleTimeRange[0]) {
+                        newPossibleTimeRange[0] = roomGroup.FROM_TIME
+                    }
+                    if(roomGroup.TO_TIME > newPossibleTimeRange[1]) {
+                        newPossibleTimeRange[1] = roomGroup.TO_TIME
                     }
                     
                     // 그룹에 해당 룸의 ID를 포함시킴
@@ -106,6 +114,7 @@ export default function Select({ location }) {
                 newFacilityData.reserveCount.MonthReservationCount = res.data.infoCount
             }
 
+            setPossibleTimeRange(newPossibleTimeRange)
             setFacilityData(newFacilityData)
 
             // 데이터를 불러오기 전에는 선택을 하지 못하도록 함.

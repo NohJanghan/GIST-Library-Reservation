@@ -8,6 +8,7 @@ import pAll from 'p-all'
 
 export default function Select({ location }) {
     const [selectedTimeRange, setSelectedTimeRange] = useState([])
+    const requestConcurrency = 4
     let possibleTimeRange = [0, 24]
 
     const userData = location.state.userData
@@ -42,7 +43,7 @@ export default function Select({ location }) {
             }
         }
 
-        pAll(dataPromises, {concurrency: 4}).then((resArr) => {
+        pAll(dataPromises, {concurrency: requestConcurrency}).then((resArr) => {
             let newFacilityData = {facilityGroups: [], reserveCount: {}}
             for(const res of resArr) {
                 for(const roomGroup of res.data.normalRoomGroupDates) {

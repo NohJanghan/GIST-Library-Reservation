@@ -97,6 +97,10 @@ export default function Reservation() {
         const infoCountIndex = selectedDate.getMonth() - new Date().getMonth()
         console.log(userData)
 
+        if(!userData) {
+            return
+        }
+
         // 예약 할 수 있는 시간이 얼마나 남았는지 체크
         // 여기서 넘겨도 나중에 다시 체크해야함
         const remainCount = userData.info[0].FAC_DUR5 - userData.infoCount[infoCountIndex]

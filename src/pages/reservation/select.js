@@ -81,7 +81,7 @@ export default function Select({ location }) {
                             }
                         }
                     }
-                    newFacilityData.facilityGroups.find(group => group.id === roomGroup.ROOM_GROUP).push(newRoomData)
+                    newFacilityData.facilityGroups.find(group => group.id === roomGroup.ROOM_GROUP).room.push(newRoomData)
                 }
 
                 // 내가 예약한 시간

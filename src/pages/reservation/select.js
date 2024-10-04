@@ -32,6 +32,7 @@ export default function Select({ location }) {
     // 처음 마운트되면, 예약 가능한 모든 방의 정보를 가져옴
     useEffect(() => {
         const dataPromises = []
+        // 방 정보 요청
         for(const elem of userData.facility) {
             // elem : {
             //     ROOM_ID,
@@ -66,6 +67,7 @@ export default function Select({ location }) {
             }
         }
 
+        // 요청한 방 정보 처리
         pAll(dataPromises, {concurrency: requestConcurrency}).then((resArr) => {
             let newFacilityData = {facilityGroups: [], reserveCount: {}}
             for(const res of resArr) {

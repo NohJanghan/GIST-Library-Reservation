@@ -4,6 +4,7 @@ import Layout from '../../components/layout'
 import TimeSelector from '../../components/reservation/timeSelector'
 import { navigate } from 'gatsby'
 import { getRoomInfo } from '../../scripts/libraryRequest'
+import pAll from 'p-all'
 
 export default function Select({ location }) {
     const [selectedTimeRange, setSelectedTimeRange] = useState([])
@@ -37,11 +38,11 @@ export default function Select({ location }) {
             //     ROOM_GROUP
             // }
             if(elem.ROOM_GROUP !== -1) {
-                dataPromises.push(getRoomInfo(userData.info[0].USER_ID, elem.ROOM_ID, selectedDate))
+                dataPromises.push(() => getRoomInfo(userData.info[0].USER_ID, elem.ROOM_ID, selectedDate))
             }
         }
 
-        Promise.all(dataPromises).then((resArr) => {
+        pAll(dataPromises, {concurrency: 4}).then((resArr) => {
             let newFacilityData = {facilityGroups: [], reserveCount: {}}
             for(const f of resArr) {
                 for(const roomGroup of f.data.normalRoomGroupDates) {

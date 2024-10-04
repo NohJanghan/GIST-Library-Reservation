@@ -25,6 +25,10 @@ export default function TimeSelector(props) {
             console.log('[🖱clicked] ' + event.target)
         }
 
+        // maxRange가 0일경우 선택 X
+        if(props.maxRange <= 0) {
+            return
+        }
         let newRange = [...props.selectedRange]
         if(newRange.length < 2) {
             newRange[0] = Number(event.target.innerText)

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import Header from '../../components/header'
 import Layout from '../../components/layout'
 import TimeSelector from '../../components/reservation/timeSelector'
@@ -12,22 +12,13 @@ export default function Select({ location }) {
     const requestBaseDelay = 50
     const requestMaxTrial = 4
     let possibleTimeRange = [0, 24]
+    const maxRange = useRef(0)
 
     const userData = location.state.userData
     const selectedDate = location.state.selectedDate
 
     const [facilityData, setFacilityData] = useState({facilityGroups: [], reserveCount: {}})
 
-    const remainCountInDay = userData.info[0].FAC_DUR4 - facilityData.reserveCount.DayReservationCount
-    const remainCountInMonth = userData.info[0].FAC_DUR5 - facilityData.reserveCount.MonthReservationCount
-    const maxRange = Math.min(remainCountInDay, remainCountInMonth)
-    if(remainCountInMonth <= 0) {
-        alert('이번 달에는 더이상 예약할 수 없습니다')
-        navigate('../')
-    } else if(remainCountInDay <= 0) {
-        alert('오늘은 더 이상 예약할 수 없습니다')
-        navigate('../')
-    }
 
     // 처음 마운트되면, 예약 가능한 모든 방의 정보를 가져옴
     useEffect(() => {
@@ -116,6 +107,18 @@ export default function Select({ location }) {
             }
 
             setFacilityData(newFacilityData)
+
+            // 데이터를 불러오기 전에는 선택을 하지 못하도록 함.
+            const remainCountInDay = (userData.info[0].FAC_DUR4 - newFacilityData.reserveCount.DayReservationCount) || 0
+            const remainCountInMonth = (userData.info[0].FAC_DUR5 - newFacilityData.reserveCount.MonthReservationCount) || 0
+            maxRange.current = Math.min(remainCountInDay, remainCountInMonth)
+            if(remainCountInMonth <= 0) {
+                alert('이번 달에는 더이상 예약할 수 없습니다')
+                navigate('../')
+            } else if(remainCountInDay <= 0) {
+                alert('오늘은 더 이상 예약할 수 없습니다')
+                navigate('../')
+            }
         }).catch((reason) => {
             alert('호실 정보를 가져오는데 문제가 발생했습니다. 다시 시도해주세요.')
             if(process.env.NODE_ENV === 'development') {
@@ -136,7 +139,7 @@ export default function Select({ location }) {
                 selectedRange={selectedTimeRange}
                 onRangeSelected={setSelectedTimeRange}
                 timeRange={possibleTimeRange}
-                maxRange={maxRange}
+                maxRange={maxRange.current}
             />
 
         </Layout>

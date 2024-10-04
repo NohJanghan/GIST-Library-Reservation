@@ -22,13 +22,11 @@ function httpResponseHandler(res) {
 }
 
 function axiosErrorHandler(err) {
-    if(err instanceof AxiosError) {
+    if(err instanceof AxiosError && err.response) {
         //handle
-        if(err.response) {
-            return {
-                status: err.response.status,
-                data: err.response.data
-            }
+        return {
+            status: err.response.status,
+            data: err.response.data
         }
     } else {
         console.error('❌ AxiosError: ' + err)

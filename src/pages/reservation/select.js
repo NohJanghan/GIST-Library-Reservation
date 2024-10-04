@@ -114,6 +114,12 @@ export default function Select({ location }) {
             }
 
             setFacilityData(newFacilityData)
+        }).catch((reason) => {
+            alert('호실 정보를 가져오는데 문제가 발생했습니다. 다시 시도해주세요.')
+            if(process.env.NODE_ENV === 'development') {
+                console.log('navigate to previous')
+            }
+            navigate('../')
         })
     }, [selectedDate, userData])
 

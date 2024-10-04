@@ -49,7 +49,7 @@ export default function TimeSelector(props) {
     
     function getTimeSlotArray(startHour, endHour) {
         let resArr = []
-        for(let i = startHour; i < endHour; i++) {
+        for(let i = startHour; i <= endHour; i++) {
             let className = 'ts_timeslot ts_normal'
 
             // 선택된 요소에 대한 class 지정

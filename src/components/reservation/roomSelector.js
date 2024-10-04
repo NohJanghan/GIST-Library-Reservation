@@ -54,8 +54,8 @@ export default function RoomSelector(props) {
                     maxRange={item.maxRange}
                 />
                 <div className='rs_buttonContainer'>
-                    <button type='button' class='rs_secondary' onClick={selectRoomHandler}>호실 선택</button>
-                    <button type='button' class='rs_primary'onClick={reserveHandler}>바로 예약하기</button>
+                    <button type='button' className='rs_secondary' onClick={selectRoomHandler}>호실 선택</button>
+                    <button type='button' className='rs_primary'onClick={reserveHandler}>바로 예약하기</button>
                 </div>
             </div>
         } else if(status === 'disabled') {

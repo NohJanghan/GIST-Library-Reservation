@@ -11,9 +11,6 @@ onOpen: async function
 
 status: enum{'reservable', 'disabled', 'loading', null/undefined}
 
-selectedRange: [from, to]
-onSelectRange: async function
-
 onClickReserve: async function
 onClickSelectRoom: async function
 
@@ -21,8 +18,6 @@ item: {
     id: Number,
     displayName: String,
     floor: Number,
-    timeRange: [fromTime, toTime]
-    maxRange: Number
 }
 */
 import React from "react";
@@ -32,9 +27,9 @@ import TimeSelector from "./timeSelector";
 import "../../styles/roomSelector.css"
 export default function RoomSelector(props) {
 
-    const {isOpened, selectedRange, status, onOpen, onSelectRange, onClickReserve, onClickSelectRoom, item} = props
+    const {isOpened, status, onOpen, onClickReserve, onClickSelectRoom, item} = props
 
-    const BottomSection = (status, onClickReserve, onClickSelectRoom, onSelectRange, selectedRange, item) => {
+    const BottomSection = (status, onClickReserve, onClickSelectRoom, item) => {
         async function selectRoomHandler(e) {
             // TODO
             await onClickSelectRoom(item, e)
@@ -47,12 +42,6 @@ export default function RoomSelector(props) {
         }
         if(status === 'reservable') {
             return <div className="rs_bottomSection">
-                <TimeSelector 
-                    selectedRange={selectedRange}
-                    onRangeSelected={onSelectRange}
-                    timeRange={item.timeRange}
-                    maxRange={item.maxRange}
-                />
                 <div className='rs_buttonContainer'>
                     <button type='button' className='rs_secondary' onClick={selectRoomHandler}>호실 선택</button>
                     <button type='button' className='rs_primary'onClick={reserveHandler}>바로 예약하기</button>
@@ -89,7 +78,7 @@ export default function RoomSelector(props) {
             <span className='rs_title'>{item.displayName}</span>
             <span className='rs_floor'>{item.floor + 'F'}</span>
         </div>
-        {isOpened && BottomSection(status, onClickReserve, onClickSelectRoom, onSelectRange, selectedRange, item)}
+        {isOpened && BottomSection(status, onClickReserve, onClickSelectRoom, item)}
     </div>
 
 }

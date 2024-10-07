@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react'
+import React, {useState, useEffect} from 'react'
 import Header from '../../components/header'
 import Layout from '../../components/layout'
 import TimeSelector from '../../components/reservation/timeSelector'
@@ -12,7 +12,7 @@ export default function Select({ location }) {
     const requestBaseDelay = 50
     const requestMaxTrial = 4
     const [possibleTimeRange, setPossibleTimeRange] = useState([8,23])
-    const maxRange = useRef(0)
+    const [maxRange, setMaxRange] = useState(0)
 
     const userData = location.state.userData
     const selectedDate = location.state.selectedDate
@@ -120,7 +120,7 @@ export default function Select({ location }) {
             // 데이터를 불러오기 전에는 선택을 하지 못하도록 함.
             const remainCountInDay = (userData.info[0].FAC_DUR4 - newFacilityData.reserveCount.DayReservationCount) || 0
             const remainCountInMonth = (userData.info[0].FAC_DUR5 - newFacilityData.reserveCount.MonthReservationCount) || 0
-            maxRange.current = Math.min(remainCountInDay, remainCountInMonth)
+            setMaxRange(Math.min(remainCountInDay, remainCountInMonth))
             if(remainCountInMonth <= 0) {
                 alert('이번 달에는 더이상 예약할 수 없습니다')
                 navigate('../')
@@ -143,12 +143,13 @@ export default function Select({ location }) {
                 <Header.Title>
                     <strong>예약 시간</strong>을<br/> 선택해주세요
                 </Header.Title>
+                <Header.Subtitle>오늘은 최대 {maxRange}시간까지 예약할 수 있습니다.</Header.Subtitle>
             </Header>
             <TimeSelector 
                 selectedRange={selectedTimeRange}
                 onRangeSelected={setSelectedTimeRange}
                 timeRange={possibleTimeRange}
-                maxRange={maxRange.current}
+                maxRange={maxRange}
             />
 
         </Layout>

@@ -50,7 +50,7 @@ export default function Reservation() {
             }
         }).catch(() => removeCookie('userId')) // 오류라면 쿠키를 삭제하여 로그인 페이지로 넘김
     }, [cookies, removeCookie])
-    
+
 
     // 선택할 수 없는 날짜 정하는 함수
     // date를 받아서 이 날짜가 선택할 수 없으면 true
@@ -113,13 +113,13 @@ export default function Reservation() {
         navigate('/reservation/select', {state: {selectedDate: selectedDate, userData: {...userData, infoCount: userData.infoCount[infoCountIndex]}}})
 
     }
-    
-    return <>
+
+    return <div className="preventScroll">
     <Layout>
         <Header>
             <Header.Title><strong>예약 날짜</strong>를<br/> 선택해주세요.</Header.Title>
         </Header>
-        <DayPicker 
+        <DayPicker
             mode="single"
             selected={selectedDate}
             onSelect={setSelectedDate}
@@ -138,5 +138,5 @@ export default function Reservation() {
         </div>
     </Layout>
     <NavBar />
-    </>
+    </div>
 }

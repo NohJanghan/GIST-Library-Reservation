@@ -1,0 +1,7 @@
+.rdp-root {
+    --rdp-day-height: 2.5rem;
+    --rdp-day-width: 2.5rem;
+    --rdp-accent-color: var(--theme-color);
+
+    margin-top: 1rem !important;
+}

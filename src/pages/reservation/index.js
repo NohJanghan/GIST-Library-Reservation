@@ -5,6 +5,7 @@ import Layout from "../../components/layout"
 import NavBar from "../../components/navbar"
 
 import "react-day-picker/style.css";
+import "../../styles/customDayPickerStyle.css"
 import * as styles from "../../styles/elements.module.css"
 import { navigate } from "gatsby"
 import { getUserInfo } from "../../scripts/libraryRequest"
@@ -119,18 +120,19 @@ export default function Reservation() {
         <Header>
             <Header.Title><strong>예약 날짜</strong>를<br/> 선택해주세요.</Header.Title>
         </Header>
-        <DayPicker
-            mode="single"
-            selected={selectedDate}
-            onSelect={setSelectedDate}
-            startMonth={new Date()}
-            endMonth={nextMonth(new Date())}
-            required
-            disabled={disabledDateMatcher}
-            // TODO: 테마에 맞게 스타일 수정 필요
-
-            style={{marginTop: "3rem"}}
-        />
+        <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+            <DayPicker
+                mode="single"
+                selected={selectedDate}
+                onSelect={setSelectedDate}
+                startMonth={new Date()}
+                endMonth={nextMonth(new Date())}
+                required
+                disabled={disabledDateMatcher}
+                // TODO: 테마에 맞게 스타일 수정 필요
+                style={{marginTop: "3rem"}}
+            />
+        </div>
         <div className={styles.buttonContainer}>
             <button type="button" onClick={goNext}>
                 다음

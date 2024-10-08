@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { Pagination } from "swiper/modules"
 
@@ -25,8 +25,17 @@ const IndexPage = () => {
       [e.target.name]: e.target.value
     })
   }
-  
+
   const [cookies, setCookie, removeCookie] = useCookies(['accessToken', 'refreshToken', 'tokenType', 'userId'])
+  // 이전에 로그인 했다면 바로 예약 페이지로 감
+  useEffect(() => {
+    if(cookies.userId) {
+      if(cookies.accessToken) {
+        navigate('/reservation')
+      }
+    }
+  }, [cookies])
+
   async function onClickLogin(e) {
     console.log('[Login] try to login')
     if(e.target.disabled) {
@@ -46,7 +55,7 @@ const IndexPage = () => {
         setCookie('refreshToken', res.data['refresh_token'])
         setCookie('tokenType', res.data['token_type'])
         setCookie('userId', userId)
-        navigate('/reservation')
+        // 이후에 useEffect에 의해 페이지 변경이 일어남
       } else {
         throw new Error(res)
       }

@@ -22,7 +22,6 @@ item: {
 */
 import React from "react";
 import Chevron from "../../images/Selector/ChevronRight.svg"
-import TimeSelector from "./timeSelector";
 
 import "../../styles/roomSelector.css"
 export default function RoomSelector(props) {
@@ -63,7 +62,7 @@ export default function RoomSelector(props) {
             return null
         }
     }
-    
+
     async function openHandler(e) {
         const afterState = !isOpened
         const beforeState = isOpened

@@ -3,8 +3,9 @@ import Header from '../../components/header'
 import Layout from '../../components/layout'
 import TimeSelector from '../../components/reservation/timeSelector'
 import { navigate } from 'gatsby'
-import { getRoomInfo } from '../../scripts/libraryRequest'
+import { getRoomInfo, reserveRoom } from '../../scripts/libraryRequest'
 import pAll from 'p-all'
+import RoomSelector from '../../components/reservation/roomSelector'
 
 export default function Select({ location }) {
     const [selectedTimeRange, setSelectedTimeRange] = useState([])
@@ -87,7 +88,7 @@ export default function Select({ location }) {
                     if(roomGroup.TO_TIME > newPossibleTimeRange[1]) {
                         newPossibleTimeRange[1] = roomGroup.TO_TIME
                     }
-                    
+
                     // 그룹에 해당 룸의 ID를 포함시킴
                     const newRoomData = {
                         id: roomGroup.ROOM_ID,
@@ -141,7 +142,7 @@ export default function Select({ location }) {
             }
             navigate('../')
         })
-    }, [selectedDate, userData])
+    }, [selectedDate, userData, okayFlag])
 
     return (<>
         <Layout>
@@ -151,13 +152,128 @@ export default function Select({ location }) {
                 </Header.Title>
                 <Header.Subtitle>오늘은 최대 {maxRange}시간까지 예약할 수 있습니다.</Header.Subtitle>
             </Header>
-            <TimeSelector 
+            <TimeSelector
                 selectedRange={selectedTimeRange}
                 onRangeSelected={setSelectedTimeRange}
                 timeRange={possibleTimeRange}
                 maxRange={maxRange}
             />
+            {
+                selectedTimeRange.length !== 0 && <>
+                    <Header>
+                        <Header.Title>
+                            <strong>예약할 시설</strong>을<br />선택해주세요
+                        </Header.Title>
+                    </Header>
+                    <RoomList
+                        selectedTimeRange={selectedTimeRange}
+                        selectedDate={selectedDate}
+                        userData={userData}
+                        facilityData={facilityData}
+                    />
+                </>
+            }
 
         </Layout>
     </>)
+}
+
+function RoomList({selectedTimeRange, selectedDate, userData, facilityData}) {
+    const [openedGroup, setOpenedGroup] = useState(null)
+    const list = []
+    const isValid = (group) => {
+        if(Math.max(...selectedTimeRange) > group.timeRange[1] || Math.min(...selectedTimeRange) < group.timeRange[0]) {
+            return false
+        }
+        for(const room of group.room) {
+            let flag = true
+            for(let i = Math.min(...selectedTimeRange); i <= Math.max(...selectedTimeRange); i++) {
+                if(room.disabledTimes.includes(i)) {
+                    flag = false
+                    break
+                }
+            }
+            if(flag) {
+                return true
+            }
+        }
+        return false
+    }
+    const reserveRoomGroup = async (group) => {
+        // 예약 가능한 호실 찾기
+        let reservableRoomId = null
+        let userReservedTimes = null
+        for(const room of group.room) {
+            let flag = true
+            // 원하는 시간에 예약 가능한 방을 찾음
+            for(let i = Math.min(...selectedTimeRange); i <= Math.max(...selectedTimeRange); i++) {
+                if(room.disabledTimes.includes(i)) {
+                    flag = false
+                    break
+                }
+            }
+
+            // 징검다리 예약은 금지됨
+            if(!room.userReservedTimes.includes(Math.min(...selectedTimeRange) - 1) && room.userReservedTimes.includes(Math.min(...selectedTimeRange) - 2)) {
+                flag = false
+            }
+            if(!room.userReservedTimes.includes(Math.max(...selectedTimeRange) + 1) && room.userReservedTimes.includes(Math.max(...selectedTimeRange) + 2)) {
+                flag = false
+            }
+
+            if(flag) {
+                reservableRoomId = room.id
+                userReservedTimes = room.userReservedTimes
+                break
+            }
+        }
+        if(!reservableRoomId) {
+            throw Error('there is no reservable room')
+        }
+
+        const reserveList = []
+        for(let i = Math.min(...selectedTimeRange); i <= Math.max(...selectedTimeRange); i++) {
+            // 이미 예약된 시간은 건너뜀
+            if(userReservedTimes && userReservedTimes.includes(i)) {
+                continue
+            }
+            reserveList.push(async () => await reserveRoom(userData.info[0].USER_ID, reservableRoomId, selectedDate, i))
+        }
+
+        pAll(reserveList, {concurrency: 2}).then((results => {
+            navigate('/reservation/done')
+        })).catch((err) => {
+            alert('예약에 실패했습니다. 다시 시도해주세요.')
+            navigate('/reservation')
+        })
+    }
+
+    const groupNameMapping = JSON.parse(process.env.GATSBY_ROOMGROUP_NAMES)
+    for(const group of facilityData.facilityGroups) {
+        if(isValid(group)) {
+            const name = groupNameMapping[group.id]
+            list.push(<RoomSelector
+                key={group.id}
+                isOpened={openedGroup === group.id}
+                onOpen={(value) => {
+                    if(value === true) {
+                        setOpenedGroup(group.id)
+                    } else {
+                        setOpenedGroup(null)
+                    }
+                }}
+                status='reservable'
+                onClickReserve={() => reserveRoomGroup(group)}
+                onClickSelectRoom={() => null /* TODO */}
+                item={{
+                    id: group.id,
+                    displayName: name,
+                    floor: group.floor
+                }}
+            />)
+        }
+
+    }
+
+    return <div>{list}</div>
 }

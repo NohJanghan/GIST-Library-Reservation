@@ -17,7 +17,7 @@
 .ts_container::-webkit-scrollbar {
     display: none; /*Chrome, Safari, Opera*/
     width: 0px;
-} 
+}
 
 .ts_timeslot {
     padding: 8px 8px 8px 8px;
@@ -31,7 +31,7 @@
 .ts_normal {
     color: var(--text-color);
     border-right: 1px solid var(--background-color);
-    
+
 }
 
 .ts_selected {

@@ -36,7 +36,7 @@ export default function TimeSelector(props) {
         } else {
             newRange[rangeChangeIndex] = Number(event.target.innerText)
         }
-        
+
         // 예약할 수 있는 범위를 넘으면 안됨
         // 만약 넘을 경우 새로 선택한 것만 선택
         if(Math.max(...newRange) - Math.min(...newRange) + 1> props.maxRange) {
@@ -46,7 +46,7 @@ export default function TimeSelector(props) {
         toggleRangeChangeIndex()
         props.onRangeSelected(newRange)
     }
-    
+
     function getTimeSlotArray(startHour, endHour) {
         let resArr = []
         for(let i = startHour; i <= endHour; i++) {

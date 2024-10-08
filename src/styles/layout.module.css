@@ -1,5 +1,4 @@
 .layout {
-    margin: 15dvh 10dvw 0 10dvw;
-    height: 75vh;
-    height: 80dvh;
+    margin: 10dvh 10dvw calc(var(--nav-bar-height) + 5dvh) 10dvw;
+    height: 90dvh;
 }

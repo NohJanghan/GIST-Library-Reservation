@@ -6,6 +6,7 @@ import { navigate } from 'gatsby'
 import { getRoomInfo, reserveRoom } from '../../scripts/libraryRequest'
 import pAll from 'p-all'
 import RoomSelector from '../../components/reservation/roomSelector'
+import NavBar from '../../components/navbar'
 
 export default function Select({ location }) {
     const [selectedTimeRange, setSelectedTimeRange] = useState([])
@@ -175,6 +176,7 @@ export default function Select({ location }) {
             }
 
         </Layout>
+        <NavBar />
     </>)
 }
 

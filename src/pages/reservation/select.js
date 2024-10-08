@@ -14,14 +14,20 @@ export default function Select({ location }) {
     const [possibleTimeRange, setPossibleTimeRange] = useState([8,23])
     const [maxRange, setMaxRange] = useState(0)
 
-    const userData = location.state.userData
-    const selectedDate = location.state.selectedDate
+    const userData = location.state && location.state.userData
+    const selectedDate = location.state && location.state.selectedDate
+    const okayFlag = location.state && location.state.userData && location.state.selectedDate ? true : false
+    console.log('okayflag: ' + okayFlag)
 
     const [facilityData, setFacilityData] = useState({facilityGroups: [], reserveCount: {}})
 
 
     // 처음 마운트되면, 예약 가능한 모든 방의 정보를 가져옴
     useEffect(() => {
+        if(!okayFlag) {
+            navigate('/reservation')
+            return
+        }
         const dataPromises = []
         // 방 정보 요청
         for(const elem of userData.facility) {

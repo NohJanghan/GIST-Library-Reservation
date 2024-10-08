@@ -15,6 +15,7 @@
     align-items: center;
 
     width: 100%;
+    height: var(--nav-bar-height);
 
     /* Nav */
     background: #FFFFFF;
@@ -29,7 +30,7 @@
     justify-content: center;
     align-items: center;
 
-    margin: 1rem;
+    margin: 0.5rem 1rem 0.25rem 1rem;
 
     color: var(--text-color);
     text-decoration: none;

@@ -103,12 +103,11 @@ const IndexPage = () => {
         </Layout>
       </SwiperSlide>
       <SwiperSlide>
-        <Layout>
+        <Layout style={{position: "relative"}}>
           <Header>
             <Header.Title><strong>GIST 도서관</strong>으로 로그인 해주세요</Header.Title>
           </Header>
-          <div className={logInFormContainer} style={{marginTop: "10dvh"}}>
-            {/* TODO: 로그인 폼 디자인 필요함*/}
+          <div className={logInFormContainer}>
             <form autoComplete="off">
                 <div>
                   <input onChange={onInputChange} enterKeyHint="next" value={userData.id} placeholder="ID" type="text" name="id" onKeyDown={handleIdKeyDown} inputMode="numeric"/>

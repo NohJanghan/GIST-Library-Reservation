@@ -98,7 +98,7 @@ export default function Reservation() {
         const infoCountIndex = selectedDate.getMonth() - new Date().getMonth()
         console.log(userData)
 
-        if(!userData) {
+        if(!userData || Object.keys(userData).length === 0) {
             return
         }
 

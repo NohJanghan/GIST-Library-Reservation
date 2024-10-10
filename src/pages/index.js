@@ -69,6 +69,10 @@ const IndexPage = () => {
     <Swiper
       modules= {[Pagination]}  //스와이퍼 아래에 bullets를 표시하는 모듈
       pagination={{clickable: true}}  //bullet을 클릭하여 페이지를 이동할 수 있음.
+      style={{
+        height: "95dvh",
+      }}
+      className="preventScroll"
     >
       <SwiperSlide>
         <Layout>

@@ -19,7 +19,8 @@ export default function Select({ location }) {
     const userData = location.state && location.state.userData
     const selectedDate = location.state && location.state.selectedDate
     const okayFlag = location.state && location.state.userData && location.state.selectedDate ? true : false
-    console.log('okayflag: ' + okayFlag)
+    if(process.env.NODE_ENV === 'development')
+        console.log('okayflag: ' + okayFlag)
 
     const [facilityData, setFacilityData] = useState({facilityGroups: [], reserveCount: {}})
 

@@ -8,7 +8,8 @@ export function toYYYYMMDD(date) {
 }
 
 function httpResponseHandler(res) {
-    console.log(`[HttpRequest Done] ${res.status} | ${JSON.stringify(res.data)}`)
+    if(process.env.NODE_ENV === 'development')
+        console.log(`[HttpRequest Done] ${res.status} | ${JSON.stringify(res.data)}`)
     // 예외처리는 실제로 데이터 처리하는 곳에서 하기로 함
     // if(res.status !== 200) {
     //     return {

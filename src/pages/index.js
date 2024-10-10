@@ -37,7 +37,8 @@ const IndexPage = () => {
   }, [cookies])
 
   async function onClickLogin(e) {
-    console.log('[Login] try to login')
+    if(process.env.NODE_ENV === 'development')
+      console.log('[Login] try to login')
     if(e.target.disabled) {
       alert("로그인중입니다.")
       return false

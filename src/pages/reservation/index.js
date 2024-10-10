@@ -24,7 +24,8 @@ export default function Reservation() {
     // 마운트 될때 한 번만 실행
     const [cookies, , removeCookie] = useCookies(['userId'])
     useEffect(() => {
-        console.log('[useEffect]')
+        if(process.env.NODE_ENV === 'development')
+            console.log('[useEffect]')
         if(!cookies.userId) {
             navigate('../')
             return
@@ -44,7 +45,8 @@ export default function Reservation() {
                 let dataTmp = {...res1.data}
                 dataTmp.infoCount = [dataTmp.infoCount]
                 dataTmp.infoCount.push(res2.data.infoCount)
-                console.log('[dataTmp]' + JSON.stringify(dataTmp))
+                if(process.env.NODE_ENV === 'development')
+                    console.log('[dataTmp]' + JSON.stringify(dataTmp))
                 setUserData(dataTmp)
             } else {
                 throw Error('Failed: Cannot update userData')
@@ -96,7 +98,8 @@ export default function Reservation() {
         // 날짜를 받아서 다음 페이지로 넘어가기
         // 유효성 검사 필요
         const infoCountIndex = selectedDate.getMonth() - new Date().getMonth()
-        console.log(userData)
+        if(process.env.NODE_ENV === 'development')
+            console.log(userData)
 
         if(!userData || Object.keys(userData).length === 0) {
             return
@@ -109,8 +112,10 @@ export default function Reservation() {
             alert('해당 달에는 더이상 예약할 수 없습니다.')
             return
         }
-        console.log('[Remain Reserve Count] ' + remainCount)
-        console.log("Selected Date: " + selectedDate)
+        if(process.env.NODE_ENV === 'development') {
+            console.log('[Remain Reserve Count] ' + remainCount)
+            console.log("Selected Date: " + selectedDate)
+        }
         navigate('/reservation/select', {state: {selectedDate: selectedDate, userData: {...userData, infoCount: userData.infoCount[infoCountIndex]}}})
 
     }

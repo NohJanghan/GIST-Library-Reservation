@@ -111,7 +111,7 @@ const IndexPage = () => {
             {/* TODO: 로그인 폼 디자인 필요함*/}
             <form autoComplete="off">
                 <div>
-                  <input onChange={onInputChange} enterKeyHint="next" value={userData.id} placeholder="ID" type="text" name="id" onKeyDown={handleIdKeyDown} />
+                  <input onChange={onInputChange} enterKeyHint="next" value={userData.id} placeholder="ID" type="text" name="id" onKeyDown={handleIdKeyDown} inputMode="numeric"/>
                 </div>
                 <div>
                   <input onChange={onInputChange} enterKeyHint="done" value={userData.pw} placeholder="Password" type="password" name="pw" ref={pwRef}/>

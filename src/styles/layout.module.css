@@ -1,4 +1,4 @@
 .layout {
     margin: 10dvh 12.5dvw calc(var(--nav-bar-height) + 5dvh) 12.5dvw;
-    min-height: 90dvh;
+    min-height: calc(85dvh - var(--nav-bar-height));
 }

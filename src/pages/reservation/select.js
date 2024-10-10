@@ -165,7 +165,7 @@ export default function Select({ location }) {
                 <Header.Title>
                     <strong>예약 시간</strong>을<br/> 선택해주세요
                 </Header.Title>
-                <Header.Subtitle>오늘은 최대 {maxRange}시간까지 예약할 수 있습니다.</Header.Subtitle>
+                <Header.Subtitle>{maxRange !== 0 ? `오늘은 최대 ${maxRange}시간까지 예약할 수 있습니다.` : "데이터를 로딩중입니다. 잠시만 기다려주세요."}</Header.Subtitle>
             </Header>
             <TimeSelector
                 selectedRange={selectedTimeRange}

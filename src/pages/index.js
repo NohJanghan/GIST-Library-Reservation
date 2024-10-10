@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { Pagination } from "swiper/modules"
 
@@ -18,6 +18,7 @@ const IndexPage = () => {
     id: '',
     pw: ''
   })
+  const pwRef = useRef()
 
   function onInputChange(e) {
     setUserData({
@@ -37,6 +38,7 @@ const IndexPage = () => {
   }, [cookies])
 
   async function onClickLogin(e) {
+    e.preventDefault()
     if(process.env.NODE_ENV === 'development')
       console.log('[Login] try to login')
     if(e.target.disabled) {
@@ -51,6 +53,7 @@ const IndexPage = () => {
       if(res.status === 400 || res.status === 401) {
         alert("입력한 정보를 다시 확인해주세요.")
         e.target.disabled = false
+        pwRef.current.focus()
       } else if(res.status === 200) {
         setCookie('accessToken', res.data['access_token'], {path: '/', maxAge: res.data['expires_in']})
         setCookie('refreshToken', res.data['refresh_token'])
@@ -65,6 +68,13 @@ const IndexPage = () => {
       e.target.disabled = false
       console.error(err)
     })
+  }
+
+  const handleIdKeyDown = (e) => {
+    if(e.key === 'Enter') {
+      e.preventDefault()
+      pwRef.current.focus()
+    }
   }
   return (
     <Swiper
@@ -99,14 +109,14 @@ const IndexPage = () => {
           </Header>
           <div className={logInFormContainer} style={{marginTop: "10dvh"}}>
             {/* TODO: 로그인 폼 디자인 필요함*/}
-            <form>
+            <form autoComplete="off">
                 <div>
-                  <input onChange={onInputChange} value={userData.id} placeholder="ID" type="text" name="id"/>
+                  <input onChange={onInputChange} enterKeyHint="next" value={userData.id} placeholder="ID" type="text" name="id" onKeyDown={handleIdKeyDown} />
                 </div>
                 <div>
-                  <input onChange={onInputChange} value={userData.pw} placeholder="Password" type="password" name="pw"/>
+                  <input onChange={onInputChange} enterKeyHint="done" value={userData.pw} placeholder="Password" type="password" name="pw" ref={pwRef}/>
                 </div>
-                <button onClick={onClickLogin} type="button">Log in</button>
+                <button onClick={onClickLogin} type="submit">Log in</button>
               </form>
           </div>
         </Layout>

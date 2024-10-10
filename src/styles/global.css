@@ -16,6 +16,9 @@ body {
 
     color: var(--text-color);
     background-color: var(--background-color);
+
+    word-break: keep-all;
+    overflow-wrap: break-word;
 }
 
 .preventScroll {

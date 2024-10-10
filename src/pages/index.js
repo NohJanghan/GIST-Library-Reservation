@@ -78,24 +78,24 @@ const IndexPage = () => {
       <SwiperSlide>
         <Layout>
           <Header>
-            <Header.Title><strong>스터디룸 예약</strong>을<br/>더 쉽게 만들기</Header.Title>
-            <Header.Subtitle>이제 비어있는 스터디룸을 찾는데<br/>시간을 쏟을 필요가 없습니다.</Header.Subtitle>
+            <Header.Title><strong>G.lib</strong>에 오신 것을 환영합니다</Header.Title>
+            <Header.Subtitle>G.lib은 도서관 시설 예약을 더 쉽게 만들어주는 비공식 웹 서비스입니다.<br/><br/>지루한 도서관 예약을 간단히 끝내세요!</Header.Subtitle>
           </Header>
         </Layout>
       </SwiperSlide>
       <SwiperSlide>
         <Layout>
           <Header>
-            <Header.Title><strong>웹 페이지</strong>를<br/>앱처럼 이용하기</Header.Title>
-            <Header.Subtitle>화면 하단의 <strong>공유 {'>'} 홈화면에 추가</strong>를 눌러<br/>서비스를 더 빠르게 이용할 수 있습니다.
-            <br/><br/>홈 화면에 추가하지 않더라도<br/>웹에서 모든 기능을 이용할 수 있습니다.</Header.Subtitle>
+            <Header.Title><strong>앱처럼 빠르게</strong> 이용하세요</Header.Title>
+            <Header.Subtitle>화면 하단의 <strong>공유 {'>'} 홈화면에 추가</strong>를 눌러 더 빠르게 이용할 수 있어요.
+            <br/><br/>홈 화면에 추가하지 않더라도 웹에서 모든 기능을 이용할 수 있습니다.</Header.Subtitle>
           </Header>
         </Layout>
       </SwiperSlide>
       <SwiperSlide>
         <Layout>
           <Header>
-            <Header.Title><strong>GIST 도서관</strong>에<br/>로그인 해주세요</Header.Title>
+            <Header.Title><strong>GIST 도서관</strong>으로 로그인 해주세요</Header.Title>
           </Header>
           <div className={logInFormContainer} style={{marginTop: "10dvh"}}>
             {/* TODO: 로그인 폼 디자인 필요함*/}

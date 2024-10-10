@@ -26,6 +26,9 @@ export default function Select({ location }) {
 
     // 처음 마운트되면, 예약 가능한 모든 방의 정보를 가져옴
     useEffect(() => {
+        // 언마운트 될때 요청 중단
+        const controller = new AbortController()
+
         if(!okayFlag) {
             navigate('/reservation')
             return
@@ -43,7 +46,7 @@ export default function Select({ location }) {
             if(elem.ROOM_GROUP !== -1) {
                 // 실패할 경우 exponential backoff 이용하여 재시도
                 const requestData = async (trial = 1) => {
-                    const res = await getRoomInfo(userData.info[0].USER_ID, elem.ROOM_ID, selectedDate)
+                    const res = await getRoomInfo(userData.info[0].USER_ID, elem.ROOM_ID, selectedDate, {signal: controller.signal})
 
                     if(res.status === 503) {
                         if(trial < requestMaxTrial) {
@@ -67,7 +70,7 @@ export default function Select({ location }) {
         }
 
         // 요청한 방 정보 처리
-        pAll(dataPromises, {concurrency: requestConcurrency}).then((resArr) => {
+        pAll(dataPromises, {concurrency: requestConcurrency, signal: controller.signal}).then((resArr) => {
             let newFacilityData = {facilityGroups: [], reserveCount: {}}
             const newPossibleTimeRange = [1000, -1000] //min/max 를 했을때 반드시 바뀔 값으로 초기화
             for(const res of resArr) {
@@ -137,6 +140,12 @@ export default function Select({ location }) {
                 navigate('../')
             }
         }).catch((reason) => {
+            if(reason.name === "AbortError") {
+                if(process.env.NODE_ENV === 'development')
+                    console.log('pAll aborted')
+                return
+            }
+
             alert('호실 정보를 가져오는데 문제가 발생했습니다. 다시 시도해주세요.')
             if(process.env.NODE_ENV === 'development') {
                 console.log('navigate to previous')
@@ -144,6 +153,10 @@ export default function Select({ location }) {
             }
             navigate('../')
         })
+
+        return () => {
+            controller.abort()
+        }
     }, [selectedDate, userData, okayFlag])
 
     return (<>

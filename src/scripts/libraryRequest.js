@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios'
+import axios, { AxiosError, CanceledError } from 'axios'
 
 const requestUrl = process.env.GATSBY_PROXY_SERVER_URL
 
@@ -22,7 +22,14 @@ function httpResponseHandler(res) {
 }
 
 function axiosErrorHandler(err) {
-    if(err instanceof AxiosError && err.response) {
+    if(err instanceof CanceledError) {
+        console.warn('Request canceled')
+        return {
+            status: 0,
+            data: "Request canceled"
+        }
+    }
+    else if(err instanceof AxiosError && err.response) {
         //handle
         return {
             status: err.response.status,
@@ -95,7 +102,7 @@ export async function getUserInfo(userId, targetDate = undefined) {
 }
 
 // 방 정보 요청
-export async function getRoomInfo(userId, roomId, date) {
+export async function getRoomInfo(userId, roomId, date, options = null) {
     let data = {}
     const startDate = (() => {
         let t = new Date(date)
@@ -118,7 +125,7 @@ export async function getRoomInfo(userId, roomId, date) {
         END_DT_YYYYMMDD: endDate
     }
 
-    await axios.get(requestUrl + "api/v1/mylibrary/facilityreservation/room/" + userId, {params: params})
+    await axios.get(requestUrl + "api/v1/mylibrary/facilityreservation/room/" + userId, {params: params, signal: options.signal})
         .then(httpResponseHandler).then((res) => data = res).catch((err) => {
             data = axiosErrorHandler(err)
         })

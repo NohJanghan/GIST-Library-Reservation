@@ -1,12 +1,12 @@
 import React, {useState, useEffect} from 'react'
 import Header from '../../components/header'
 import Layout from '../../components/layout'
-import TimeSelector from '../../components/reservation/timeSelector'
+import NavBar from '../../components/navbar'
 import { navigate } from 'gatsby'
 import { getRoomInfo, reserveRoom } from '../../scripts/libraryRequest'
 import pAll from 'p-all'
 import RoomSelector from '../../components/reservation/roomSelector'
-import NavBar from '../../components/navbar'
+import TimeSelector from '../../components/reservation/timeSelector'
 
 export default function Select({ location }) {
     const [selectedTimeRange, setSelectedTimeRange] = useState([])

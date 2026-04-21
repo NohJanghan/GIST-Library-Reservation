@@ -1,0 +1,1563 @@
+{
+  "version": "2.11",
+  "children": [
+    {
+      "type": "frame",
+      "id": "0DzPs",
+      "x": 1400,
+      "y": 80,
+      "name": "Reservation Result Screens",
+      "fill": "#ECEAE6",
+      "gap": 28,
+      "padding": 28,
+      "children": [
+        {
+          "type": "frame",
+          "id": "InJoC",
+          "name": "1) 로그인",
+          "width": 390,
+          "height": 844,
+          "fill": "#FFFFFF",
+          "cornerRadius": 40,
+          "effect": {
+            "type": "shadow",
+            "shadowType": "outer",
+            "color": "#00000014",
+            "offset": {
+              "x": 0,
+              "y": 8
+            },
+            "blur": 24
+          },
+          "layout": "vertical",
+          "gap": 14,
+          "padding": [
+            24,
+            24,
+            20,
+            24
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "6iUtd",
+              "name": "topSpace",
+              "width": "fill_container",
+              "height": 84,
+              "layout": "vertical"
+            },
+            {
+              "type": "frame",
+              "id": "YTEiG",
+              "name": "hero",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 8,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "A9pyR",
+                  "name": "loginTitle",
+                  "fill": "#111111",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "도서관 예약",
+                  "fontFamily": "Inter",
+                  "fontSize": 22,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "DbRBE",
+                  "name": "loginSubtitle",
+                  "fill": "#666666",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "개인 열람실과 스터디룸을 빠르게 예약하세요",
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "4uZjX",
+              "name": "form",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "zdD1S",
+                  "name": "idField",
+                  "width": "fill_container",
+                  "height": 48,
+                  "cornerRadius": 12,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#DDDDDD"
+                  },
+                  "padding": [
+                    14,
+                    12
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "04cNg",
+                      "name": "idPlaceholder",
+                      "fill": "#9B9B9B",
+                      "content": "학번 또는 아이디",
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "NX8ev",
+                  "name": "pwField",
+                  "width": "fill_container",
+                  "height": 48,
+                  "cornerRadius": 12,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#DDDDDD"
+                  },
+                  "padding": [
+                    14,
+                    12
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "zPDPW",
+                      "name": "pwPlaceholder",
+                      "fill": "#9B9B9B",
+                      "content": "비밀번호",
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "6sD2n",
+              "name": "navSpacer",
+              "width": "fill_container",
+              "height": 16,
+              "layout": "vertical"
+            },
+            {
+              "type": "frame",
+              "id": "TD3cv",
+              "name": "loginBtn",
+              "width": "fill_container",
+              "fill": "#C45246",
+              "cornerRadius": 12,
+              "padding": [
+                14,
+                12
+              ],
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "x6MhB",
+                  "name": "loginBtnText",
+                  "fill": "#FFFFFF",
+                  "content": "로그인",
+                  "fontFamily": "Inter",
+                  "fontSize": 16,
+                  "fontWeight": "600"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "k19v9",
+          "name": "3) 예약 날짜 선택",
+          "width": 390,
+          "height": 844,
+          "fill": "#FFFFFF",
+          "cornerRadius": 40,
+          "effect": {
+            "type": "shadow",
+            "shadowType": "outer",
+            "color": "#00000014",
+            "offset": {
+              "x": 0,
+              "y": 8
+            },
+            "blur": 24
+          },
+          "layout": "vertical",
+          "gap": 18,
+          "padding": [
+            28,
+            24,
+            20,
+            24
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "oLpYF",
+              "name": "dHeader",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 8,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "HZXHT",
+                  "name": "dTitle",
+                  "fill": "#111111",
+                  "content": "예약 날짜 선택",
+                  "fontFamily": "Inter",
+                  "fontSize": 22,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "UNu4l",
+                  "name": "dSubtitle",
+                  "fill": "#666666",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "원하는 방문일을 먼저 선택하세요",
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "kfMvB",
+              "name": "monthCard",
+              "width": "fill_container",
+              "fill": "#FFFFFF",
+              "cornerRadius": 12,
+              "stroke": {
+                "thickness": 1,
+                "fill": "#E3E3E3"
+              },
+              "layout": "vertical",
+              "gap": 12,
+              "padding": 14,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "gN4jq",
+                  "name": "monthText",
+                  "fill": "#444444",
+                  "content": "오늘 포함 7일 선택",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "QOGSO",
+                  "name": "dayOptions",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "IccbM",
+                      "name": "day1",
+                      "width": "fill_container",
+                      "height": 64,
+                      "cornerRadius": 10,
+                      "stroke": {
+                        "thickness": 2,
+                        "fill": "#C45246"
+                      },
+                      "layout": "vertical",
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "EKxLs",
+                          "name": "t1",
+                          "fill": "#C45246",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "오늘\n04.20",
+                          "lineHeight": 1.3,
+                          "textAlign": "center",
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "SSSgx",
+                      "name": "day2",
+                      "width": "fill_container",
+                      "height": 64,
+                      "cornerRadius": 10,
+                      "stroke": {
+                        "thickness": 1,
+                        "fill": "#DDDDDD"
+                      },
+                      "layout": "vertical",
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "ibilx",
+                          "name": "t2",
+                          "fill": "#555555",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "화\n04.21",
+                          "lineHeight": 1.3,
+                          "textAlign": "center",
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "wMea6",
+                      "name": "day3",
+                      "width": "fill_container",
+                      "height": 64,
+                      "cornerRadius": 10,
+                      "stroke": {
+                        "thickness": 1,
+                        "fill": "#DDDDDD"
+                      },
+                      "layout": "vertical",
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "9EyWO",
+                          "name": "t3",
+                          "fill": "#555555",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "수\n04.22",
+                          "lineHeight": 1.3,
+                          "textAlign": "center",
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "K02mn",
+                      "name": "day4",
+                      "width": "fill_container",
+                      "height": 64,
+                      "cornerRadius": 10,
+                      "stroke": {
+                        "thickness": 1,
+                        "fill": "#DDDDDD"
+                      },
+                      "layout": "vertical",
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "5Ds1l",
+                          "name": "t4",
+                          "fill": "#555555",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "목\n04.23",
+                          "lineHeight": 1.3,
+                          "textAlign": "center",
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "7Nrbn",
+                      "name": "day5",
+                      "width": "fill_container",
+                      "height": 64,
+                      "cornerRadius": 10,
+                      "stroke": {
+                        "thickness": 1,
+                        "fill": "#DDDDDD"
+                      },
+                      "layout": "vertical",
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "UzTlF",
+                          "name": "t5",
+                          "fill": "#555555",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "금\n04.24",
+                          "lineHeight": 1.3,
+                          "textAlign": "center",
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "Mqewo",
+                      "name": "day6",
+                      "width": "fill_container",
+                      "height": 64,
+                      "cornerRadius": 10,
+                      "stroke": {
+                        "thickness": 1,
+                        "fill": "#DDDDDD"
+                      },
+                      "layout": "vertical",
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "BxgRb",
+                          "name": "t6",
+                          "fill": "#555555",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "토\n04.25",
+                          "lineHeight": 1.3,
+                          "textAlign": "center",
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "jr2R8",
+                      "name": "day7",
+                      "width": "fill_container",
+                      "height": 64,
+                      "cornerRadius": 10,
+                      "stroke": {
+                        "thickness": 1,
+                        "fill": "#DDDDDD"
+                      },
+                      "layout": "vertical",
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "6u91j",
+                          "name": "t7",
+                          "fill": "#555555",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "일\n04.26",
+                          "lineHeight": 1.3,
+                          "textAlign": "center",
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "AAM7Y",
+              "name": "selectedWrap",
+              "width": "fill_container",
+              "fill": "#ffffff",
+              "cornerRadius": 12,
+              "stroke": {
+                "thickness": 1.5,
+                "fill": "#e6e6e6"
+              },
+              "padding": [
+                12,
+                14
+              ],
+              "justifyContent": "space_between",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "o3Pzc",
+                  "name": "selectedLabel",
+                  "fill": "#111111",
+                  "content": "선택 날짜",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "rSIL9",
+                  "name": "selectedDate",
+                  "fill": "#111111",
+                  "content": "2026.04.15",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "600"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "pueT3",
+              "name": "navSpacer",
+              "width": "fill_container",
+              "height": "fill_container",
+              "layout": "vertical"
+            },
+            {
+              "type": "frame",
+              "id": "59b1y",
+              "name": "confirmBtn",
+              "width": "fill_container",
+              "fill": "#C45246",
+              "cornerRadius": 12,
+              "effect": {
+                "type": "shadow",
+                "shadowType": "outer",
+                "color": "#8E2F261F",
+                "offset": {
+                  "x": 0,
+                  "y": 4
+                },
+                "blur": 10
+              },
+              "padding": [
+                14,
+                12
+              ],
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "HEB9R",
+                  "name": "confirmText",
+                  "fill": "#FFFFFF",
+                  "content": "이 날짜로 예약",
+                  "fontFamily": "Inter",
+                  "fontSize": 16,
+                  "fontWeight": "600"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "yiPAJ",
+              "name": "navSpacer",
+              "width": "fill_container",
+              "height": 64,
+              "layout": "vertical"
+            },
+            {
+              "type": "frame",
+              "id": "7vKbt",
+              "name": "nav1",
+              "width": "fill_container",
+              "fill": "#FFFFFF",
+              "cornerRadius": 12,
+              "stroke": {
+                "thickness": 1,
+                "fill": "#E3E3E3"
+              },
+              "padding": [
+                8,
+                14
+              ],
+              "justifyContent": "space_between",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "bMQss",
+                  "name": "n1",
+                  "fill": "#C45246",
+                  "content": "예약",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "ipDsG",
+                  "name": "n2",
+                  "fill": "#7C7C7C",
+                  "content": "내 예약",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "600"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "q8ym0",
+          "name": "4) 예약 시간 선택",
+          "width": 390,
+          "height": 844,
+          "fill": "#FFFFFF",
+          "cornerRadius": 40,
+          "effect": {
+            "type": "shadow",
+            "shadowType": "outer",
+            "color": "#00000014",
+            "offset": {
+              "x": 0,
+              "y": 8
+            },
+            "blur": 24
+          },
+          "layout": "vertical",
+          "gap": 16,
+          "padding": [
+            36,
+            24,
+            24,
+            24
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "TPcqO",
+              "name": "tTitle",
+              "fill": "#111111",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "예약 시간을 선택해주세요",
+              "lineHeight": 1.16,
+              "fontFamily": "Inter",
+              "fontSize": 34,
+              "fontWeight": "700"
+            },
+            {
+              "type": "frame",
+              "id": "GWE8j",
+              "name": "tCard",
+              "width": "fill_container",
+              "fill": "#FFFFFF",
+              "cornerRadius": 14,
+              "stroke": {
+                "thickness": 1,
+                "fill": "#E6E6E6"
+              },
+              "layout": "vertical",
+              "gap": 10,
+              "padding": 14,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "aIn5T",
+                  "name": "tDate",
+                  "fill": "#333333",
+                  "content": "선택 날짜  2026년 4월 21일 (화)",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "600"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "HcxPk",
+              "name": "tChips",
+              "clip": true,
+              "width": "fill_container",
+              "gap": 8,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "yWslW",
+                  "name": "c1",
+                  "fill": "#ECECEC",
+                  "cornerRadius": 8,
+                  "padding": [
+                    8,
+                    10
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "kVQpt",
+                      "name": "c1t",
+                      "fill": "#333333",
+                      "content": "09시",
+                      "fontFamily": "Inter",
+                      "fontSize": 15,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "FjMMS",
+                  "name": "c2",
+                  "fill": "#ECECEC",
+                  "cornerRadius": 8,
+                  "padding": [
+                    8,
+                    10
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "w0oOL",
+                      "name": "c2t",
+                      "fill": "#333333",
+                      "content": "10시",
+                      "fontFamily": "Inter",
+                      "fontSize": 15,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "2d02A",
+                  "name": "c3",
+                  "fill": "#C45246",
+                  "cornerRadius": 8,
+                  "padding": [
+                    8,
+                    10
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "2WPsi",
+                      "name": "c3t",
+                      "fill": "#FFFFFF",
+                      "content": "11시",
+                      "fontFamily": "Inter",
+                      "fontSize": 15,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "NqSvO",
+                  "name": "c4",
+                  "fill": "#c45246",
+                  "cornerRadius": 8,
+                  "padding": [
+                    8,
+                    10
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "qLskQ",
+                      "name": "c4t",
+                      "fill": "#ffffff",
+                      "content": "12시",
+                      "fontFamily": "Inter",
+                      "fontSize": 15,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "68TYQ",
+                  "name": "c4",
+                  "fill": "#c45246",
+                  "cornerRadius": 8,
+                  "padding": [
+                    8,
+                    10
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "jjLHP",
+                      "name": "c4t",
+                      "fill": "#ffffff",
+                      "content": "13시",
+                      "fontFamily": "Inter",
+                      "fontSize": 15,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "5E34j",
+                  "name": "c4",
+                  "fill": "#ECECEC",
+                  "cornerRadius": 8,
+                  "padding": [
+                    8,
+                    10
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "NnYb1",
+                      "name": "c4t",
+                      "fill": "#333333",
+                      "content": "14시",
+                      "fontFamily": "Inter",
+                      "fontSize": 15,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "H7477",
+                  "name": "c4",
+                  "fill": "#ECECEC",
+                  "cornerRadius": 8,
+                  "padding": [
+                    8,
+                    10
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "iJOgB",
+                      "name": "c4t",
+                      "fill": "#333333",
+                      "content": "15시",
+                      "fontFamily": "Inter",
+                      "fontSize": 15,
+                      "fontWeight": "700"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "Wfba1",
+              "name": "sp1",
+              "width": "fill_container",
+              "height": "fill_container",
+              "layout": "vertical"
+            },
+            {
+              "type": "frame",
+              "id": "5vLLv",
+              "name": "nextBtn",
+              "width": "fill_container",
+              "fill": "#C45246",
+              "cornerRadius": 12,
+              "effect": {
+                "type": "shadow",
+                "shadowType": "outer",
+                "color": "#8E2F261F",
+                "offset": {
+                  "x": 0,
+                  "y": 4
+                },
+                "blur": 10
+              },
+              "padding": [
+                14,
+                12
+              ],
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "4MDmh",
+                  "name": "nextTxt",
+                  "fill": "#FFFFFF",
+                  "content": "다음",
+                  "fontFamily": "Inter",
+                  "fontSize": 18,
+                  "fontWeight": "700"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "Nuc6k",
+              "name": "navSpacer",
+              "width": "fill_container",
+              "height": 64,
+              "layout": "vertical"
+            },
+            {
+              "type": "frame",
+              "id": "illJt",
+              "name": "nav1",
+              "width": "fill_container",
+              "fill": "#FFFFFF",
+              "cornerRadius": 12,
+              "stroke": {
+                "thickness": 1,
+                "fill": "#E3E3E3"
+              },
+              "padding": [
+                8,
+                14
+              ],
+              "justifyContent": "space_between",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "Xyygo",
+                  "name": "n1",
+                  "fill": "#C45246",
+                  "content": "예약",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "J0weV",
+                  "name": "n2",
+                  "fill": "#7C7C7C",
+                  "content": "내 예약",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "600"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "IPUvn",
+          "name": "5) 스터디룸 선택",
+          "width": 390,
+          "height": 844,
+          "fill": "#FFFFFF",
+          "cornerRadius": 40,
+          "effect": {
+            "type": "shadow",
+            "shadowType": "outer",
+            "color": "#00000014",
+            "offset": {
+              "x": 0,
+              "y": 8
+            },
+            "blur": 24
+          },
+          "layout": "vertical",
+          "gap": 16,
+          "padding": [
+            36,
+            24,
+            24,
+            24
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "nFjw8",
+              "name": "rTitle",
+              "fill": "#111111",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "예약 시설을 선택해주세요",
+              "lineHeight": 1.16,
+              "fontFamily": "Inter",
+              "fontSize": 34,
+              "fontWeight": "700"
+            },
+            {
+              "type": "frame",
+              "id": "IHeTI",
+              "name": "rExpanded",
+              "width": "fill_container",
+              "fill": "#FFFFFF",
+              "cornerRadius": 12,
+              "stroke": {
+                "thickness": 1,
+                "fill": "#E2E2E2"
+              },
+              "layout": "vertical",
+              "gap": 10,
+              "padding": 14,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "OSsVr",
+                  "name": "rTop",
+                  "width": "fill_container",
+                  "justifyContent": "space_between",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "5UdWW",
+                      "name": "rTopL",
+                      "fill": "#2A2A2A",
+                      "content": "소형 개인 열람실",
+                      "fontFamily": "Inter",
+                      "fontSize": 20,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "Aq0Ov",
+                      "name": "rTopR",
+                      "fill": "#4D4D4D",
+                      "content": "2F",
+                      "fontFamily": "Inter",
+                      "fontSize": 16,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "N37Rm",
+                  "name": "rTime",
+                  "fill": "#666666",
+                  "content": "11시 - 13시",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "Ba9rl",
+                  "name": "rBtn",
+                  "width": "fill_container",
+                  "fill": "#C45246",
+                  "cornerRadius": 10,
+                  "padding": [
+                    12,
+                    10
+                  ],
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "O5jFW",
+                      "name": "rBtnT",
+                      "fill": "#FFFFFF",
+                      "content": "바로 예약하기",
+                      "fontFamily": "Inter",
+                      "fontSize": 16,
+                      "fontWeight": "700"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "B0Wch",
+              "name": "rRow2",
+              "width": "fill_container",
+              "fill": "#FFFFFF",
+              "cornerRadius": 10,
+              "stroke": {
+                "thickness": 1,
+                "fill": "#DCDCDC"
+              },
+              "padding": [
+                12,
+                14
+              ],
+              "justifyContent": "space_between",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "cICDq",
+                  "name": "r2l",
+                  "fill": "#2A2A2A",
+                  "content": "중형 개인 열람실",
+                  "fontFamily": "Inter",
+                  "fontSize": 17,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "9T7YA",
+                  "name": "r2r",
+                  "fill": "#C45246",
+                  "content": "2F",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "700"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "XXY0q",
+              "name": "rRow3",
+              "width": "fill_container",
+              "fill": "#FFFFFF",
+              "cornerRadius": 10,
+              "stroke": {
+                "thickness": 1,
+                "fill": "#DCDCDC"
+              },
+              "padding": [
+                12,
+                14
+              ],
+              "justifyContent": "space_between",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "4czIQ",
+                  "name": "r3l",
+                  "fill": "#2A2A2A",
+                  "content": "5인 스터디룸",
+                  "fontFamily": "Inter",
+                  "fontSize": 17,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "5LbfA",
+                  "name": "r3r",
+                  "fill": "#C45246",
+                  "content": "2F",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "700"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "ef9N4",
+              "name": "rUn",
+              "width": "fill_container",
+              "fill": "#F1F1F1",
+              "cornerRadius": 12,
+              "layout": "vertical",
+              "gap": 4,
+              "padding": 14,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "2atyg",
+                  "name": "rUnT",
+                  "fill": "#8C8C8C",
+                  "content": "8인 스터디룸",
+                  "fontFamily": "Inter",
+                  "fontSize": 17,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "71hkU",
+                  "name": "rUnSub",
+                  "fill": "#9A9A9A",
+                  "content": "권한 있음 · 예약 불가",
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "600"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "E0cQT",
+              "name": "rSp",
+              "width": "fill_container",
+              "height": "fill_container",
+              "layout": "vertical"
+            },
+            {
+              "type": "frame",
+              "id": "ySH8V",
+              "name": "rNav",
+              "width": "fill_container",
+              "fill": "#FFFFFF",
+              "cornerRadius": 12,
+              "stroke": {
+                "thickness": 1,
+                "fill": "#E3E3E3"
+              },
+              "padding": [
+                8,
+                14
+              ],
+              "justifyContent": "space_between",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "LJZp1",
+                  "name": "rn1",
+                  "fill": "#C45246",
+                  "content": "예약",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "8qe0P",
+                  "name": "rn2",
+                  "fill": "#7C7C7C",
+                  "content": "내 예약",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "600"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "708T9",
+          "name": "7) 예약 성공",
+          "width": 390,
+          "height": 844,
+          "fill": "#FFFFFF",
+          "cornerRadius": 40,
+          "effect": {
+            "type": "shadow",
+            "shadowType": "outer",
+            "color": "#00000014",
+            "offset": {
+              "x": 0,
+              "y": 8
+            },
+            "blur": 24
+          },
+          "layout": "vertical",
+          "gap": 14,
+          "padding": [
+            36,
+            24,
+            16,
+            24
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "hQ9Zv",
+              "name": "okTitle",
+              "fill": "#111111",
+              "content": "예약 완료",
+              "fontFamily": "Inter",
+              "fontSize": 22,
+              "fontWeight": "700"
+            },
+            {
+              "type": "frame",
+              "id": "1MJSW",
+              "name": "okCard",
+              "width": "fill_container",
+              "fill": "#ffffff",
+              "cornerRadius": 14,
+              "stroke": {
+                "thickness": 1,
+                "fill": "#E5E5E5"
+              },
+              "layout": "vertical",
+              "gap": 6,
+              "padding": 16,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "nGKHE",
+                  "name": "okRoom",
+                  "fill": "#222222",
+                  "content": "소형 개인 열람실 (2F)",
+                  "fontFamily": "Inter",
+                  "fontSize": 18,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "ceiSd",
+                  "name": "okDate",
+                  "fill": "#666666",
+                  "content": "2026년 4월 21일",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "XHBg0",
+                  "name": "okTime",
+                  "fill": "#666666",
+                  "content": "11시 - 13시",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "600"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "gmx6y",
+              "name": "okBtn",
+              "width": "fill_container",
+              "fill": "#C45246",
+              "cornerRadius": 10,
+              "padding": [
+                12,
+                10
+              ],
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "5scJQ",
+                  "name": "okBtnT",
+                  "fill": "#FFFFFF",
+                  "content": "내 예약 보기",
+                  "fontFamily": "Inter",
+                  "fontSize": 15,
+                  "fontWeight": "700"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "6HywE",
+              "name": "okSp",
+              "width": "fill_container",
+              "height": "fill_container",
+              "layout": "vertical"
+            },
+            {
+              "type": "frame",
+              "id": "qt4zi",
+              "name": "okNav",
+              "width": "fill_container",
+              "fill": "#FFFFFF",
+              "cornerRadius": 14,
+              "stroke": {
+                "thickness": 1,
+                "fill": "#DDDDDD"
+              },
+              "padding": [
+                8,
+                12
+              ],
+              "justifyContent": "space_between",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "q4g9W",
+                  "name": "okNav1",
+                  "fill": "#7C7C7C",
+                  "content": "예약",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "ljyzL",
+                  "name": "okNav2",
+                  "fill": "#C45246",
+                  "content": "내 예약",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "700"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "dcO80",
+          "name": "6) 예약 현황",
+          "width": 390,
+          "height": 844,
+          "fill": "#FFFFFF",
+          "cornerRadius": 40,
+          "effect": {
+            "type": "shadow",
+            "shadowType": "outer",
+            "color": "#00000014",
+            "offset": {
+              "x": 0,
+              "y": 8
+            },
+            "blur": 24
+          },
+          "layout": "vertical",
+          "gap": 14,
+          "padding": [
+            36,
+            24,
+            16,
+            24
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "jggWh",
+              "name": "sTitle",
+              "fill": "#111111",
+              "content": "노장한님의 예약",
+              "fontFamily": "Inter",
+              "fontSize": 22,
+              "fontWeight": "700"
+            },
+            {
+              "type": "frame",
+              "id": "5eDPp",
+              "name": "sCard",
+              "width": "fill_container",
+              "fill": "#FFFFFF",
+              "cornerRadius": 14,
+              "stroke": {
+                "thickness": 1,
+                "fill": "#E5E5E5"
+              },
+              "layout": "vertical",
+              "gap": 6,
+              "padding": 16,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "oJ4ta",
+                  "name": "sRoom",
+                  "fill": "#222222",
+                  "content": "소형 개인 열람실 (2F)",
+                  "fontFamily": "Inter",
+                  "fontSize": 18,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "5gYkz",
+                  "name": "sDate",
+                  "fill": "#666666",
+                  "content": "2026년 4월 21일",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "or1em",
+                  "name": "sTime",
+                  "fill": "#666666",
+                  "content": "11시 - 13시",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "cL3hU",
+                  "name": "sCancel",
+                  "fill": "#C45246",
+                  "cornerRadius": 9,
+                  "padding": [
+                    8,
+                    12
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "EaJNi",
+                      "name": "sCancelT",
+                      "fill": "#FFFFFF",
+                      "content": "예약 취소",
+                      "fontFamily": "Inter",
+                      "fontSize": 13,
+                      "fontWeight": "700"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "0SV0I",
+              "name": "sSp",
+              "width": "fill_container",
+              "height": "fill_container",
+              "layout": "vertical"
+            },
+            {
+              "type": "frame",
+              "id": "fHdWJ",
+              "name": "sNav",
+              "width": "fill_container",
+              "fill": "#FFFFFF",
+              "cornerRadius": 14,
+              "stroke": {
+                "thickness": 1,
+                "fill": "#DDDDDD"
+              },
+              "padding": [
+                8,
+                12
+              ],
+              "justifyContent": "space_between",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "xf2F9",
+                  "name": "sNav1",
+                  "fill": "#7C7C7C",
+                  "content": "예약",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "NM7gz",
+                  "name": "sNav2",
+                  "fill": "#C45246",
+                  "content": "내 예약",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "700"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

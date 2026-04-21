@@ -1,0 +1,282 @@
+:root {
+  color: #111827;
+  background: #f3f4f6;
+  font-family:
+    "Pretendard Variable",
+    "Pretendard",
+    "Noto Sans KR",
+    sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background:
+    radial-gradient(circle at top, #ffffff 0, #f8fafc 32%, #eef2f7 100%);
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.app-shell {
+  min-height: 100vh;
+  padding: 24px 16px;
+}
+
+.panel {
+  width: min(760px, 100%);
+  margin: 0 auto;
+  border: 1px solid #dbe3ec;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 18px 48px rgba(15, 23, 42, 0.08);
+}
+
+.narrow-panel {
+  max-width: 480px;
+  padding: 32px 24px;
+}
+
+.app-panel {
+  padding: 24px;
+}
+
+.top-bar,
+.section-head,
+.button-row,
+.tab-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.tab-bar {
+  margin: 20px 0 24px;
+  padding: 4px;
+  border-radius: 14px;
+  background: #eef2ff;
+}
+
+.tab {
+  flex: 1;
+  border: 0;
+  padding: 12px 16px;
+  border-radius: 10px;
+  background: transparent;
+  color: #475569;
+}
+
+.tab.active {
+  background: #ffffff;
+  color: #111827;
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.section + .section {
+  margin-top: 28px;
+  padding-top: 28px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field input {
+  width: 100%;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  padding: 14px 16px;
+  background: #ffffff;
+}
+
+.primary-button,
+.secondary-button,
+.date-chip,
+.time-chip {
+  border-radius: 12px;
+  border: 1px solid transparent;
+  transition:
+    background-color 0.18s ease,
+    border-color 0.18s ease,
+    opacity 0.18s ease;
+}
+
+.primary-button {
+  border: 0;
+  padding: 12px 16px;
+  background: #0f172a;
+  color: #ffffff;
+}
+
+.primary-button:disabled,
+.secondary-button:disabled,
+.date-chip:disabled,
+.time-chip:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.secondary-button {
+  padding: 12px 16px;
+  border-color: #cbd5e1;
+  background: #ffffff;
+  color: #111827;
+}
+
+.date-grid,
+.time-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.date-grid {
+  grid-template-columns: repeat(auto-fit, minmax(92px, 1fr));
+}
+
+.time-grid {
+  grid-template-columns: repeat(auto-fit, minmax(88px, 1fr));
+}
+
+.date-chip,
+.time-chip {
+  min-height: 64px;
+  padding: 12px 14px;
+  border-color: #dbe3ec;
+  background: #ffffff;
+  color: #0f172a;
+}
+
+.date-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.date-chip.active,
+.time-chip.active {
+  border-color: #111827;
+  background: #111827;
+  color: #ffffff;
+}
+
+.info-card,
+.room-card,
+.reservation-card {
+  border: 1px solid #dbe3ec;
+  border-radius: 16px;
+  padding: 16px;
+  background: #ffffff;
+}
+
+.room-card,
+.reservation-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.room-card-disabled {
+  background: #f8fafc;
+  color: #94a3b8;
+}
+
+.room-name {
+  margin: 0 0 6px;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.eyebrow,
+.muted,
+.error-text,
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+.eyebrow {
+  font-size: 0.875rem;
+  color: #475569;
+}
+
+.muted {
+  color: #64748b;
+}
+
+.error-text {
+  color: #b91c1c;
+}
+
+.list-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+code {
+  font-family:
+    "SFMono-Regular",
+    Consolas,
+    monospace;
+}
+
+@media (max-width: 640px) {
+  .app-shell {
+    padding: 0;
+  }
+
+  .panel {
+    min-height: 100vh;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .app-panel,
+  .narrow-panel {
+    padding: 20px 16px 24px;
+  }
+
+  .top-bar,
+  .section-head,
+  .room-card,
+  .reservation-card,
+  .button-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .tab-bar {
+    margin-top: 16px;
+  }
+}

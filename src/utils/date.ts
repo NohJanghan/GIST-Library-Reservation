@@ -6,6 +6,11 @@ type DateParts = {
   day: number;
 };
 
+export type KoreaTimeParts = {
+  hour: number;
+  minute: number;
+};
+
 function getFormatter() {
   return new Intl.DateTimeFormat("en-CA", {
     timeZone: KOREA_TIME_ZONE,
@@ -84,14 +89,22 @@ export function getDateOptions(days: number) {
   return Array.from({ length: days }, (_, index) => addDaysToDateKey(today, index));
 }
 
-export function getCurrentKoreaHour() {
+export function getCurrentKoreaTimeParts(): KoreaTimeParts {
   const parts = new Intl.DateTimeFormat("en-GB", {
     timeZone: KOREA_TIME_ZONE,
     hour: "2-digit",
+    minute: "2-digit",
     hour12: false,
   }).formatToParts(new Date());
 
-  return getPartValue(parts, "hour");
+  return {
+    hour: getPartValue(parts, "hour"),
+    minute: getPartValue(parts, "minute"),
+  };
+}
+
+export function getNextReservableHour() {
+  return getCurrentKoreaTimeParts().hour + 1;
 }
 
 export function getKoreanWeekday(dateKey: string) {

@@ -15,8 +15,8 @@ import type {
   AuthState,
   FacilityGroup,
   FacilityResponse,
-  MergedReservation,
   MyReservationsState,
+  ReservationDisplayItem,
   ReservationSuccess,
   ReserveState,
 } from "./types";
@@ -27,19 +27,20 @@ import {
   formatDateLabel,
   formatHourLabel,
   formatRangeLabel,
-  getCurrentKoreaHour,
+  getCurrentKoreaTimeParts,
   getDateOptions,
+  getNextReservableHour,
   getTodayDateKey,
   getKoreanWeekday,
   isDateWithinRange,
   isToday,
 } from "./utils/date";
 import {
+  buildReservationDisplayItems,
   findFirstAvailableRoom,
   getMaxSelectableHours,
   getSelectableHourRange,
   isRoomAvailableForRange,
-  mergeReservationItems,
   normalizeRange,
 } from "./utils/reservations";
 
@@ -62,6 +63,14 @@ function extractMessage(error: unknown, fallback: string) {
   }
 
   return fallback;
+}
+
+function getPartialCancellationMessage(scope: "single" | "all") {
+  if (scope === "all") {
+    return "이미 지난 시간과 사용 중인 시간은 제외하고, 아직 시작되지 않은 오늘 예약만 취소합니다. 계속할까요?";
+  }
+
+  return "이미 지난 시간과 사용 중인 시간은 제외하고, 아직 시작되지 않은 시간만 취소합니다. 계속할까요?";
 }
 
 function App() {
@@ -310,7 +319,7 @@ function ReserveTab({
         facilityResponse.commonFacilityInfo.reservationLimitInMonth,
       )
     : 0;
-  const currentKoreaHour = getCurrentKoreaHour();
+  const nextReservableHour = getNextReservableHour();
   const normalizedRange = reserveState.selectedRange
     ? normalizeRange(reserveState.selectedRange)
     : null;
@@ -358,7 +367,8 @@ function ReserveTab({
   };
 
   const handleTimeClick = (hour: number) => {
-    const isPastHour = isToday(reserveState.selectedDate) && hour < currentKoreaHour;
+    const isPastHour =
+      isToday(reserveState.selectedDate) && hour < nextReservableHour;
 
     if (isPastHour || maxSelectableHours <= 0) {
       return;
@@ -547,7 +557,7 @@ function ReserveTab({
               hour <= normalizedRange[1];
             const disabled =
               maxSelectableHours <= 0 ||
-              (isToday(reserveState.selectedDate) && hour < currentKoreaHour);
+              (isToday(reserveState.selectedDate) && hour < nextReservableHour);
 
             return (
               <button
@@ -702,6 +712,7 @@ function MyReservationsTab({
   const [submittingKey, setSubmittingKey] = useState<string | null>(null);
   const today = getTodayDateKey();
   const toDate = addDaysToDateKey(today, RESERVATION_LOOKAHEAD_DAYS);
+  const currentKoreaTime = getCurrentKoreaTimeParts();
 
   const loadItems = async () => {
     setState((current) => ({ ...current, loading: true, error: null }));
@@ -743,18 +754,51 @@ function MyReservationsTab({
     void loadItems();
   }, []);
 
-  const mergedItems = useMemo(() => mergeReservationItems(state.items), [state.items]);
-  const todayItems = mergedItems.filter((item) => item.date === today);
+  const reservationItems = useMemo(
+    () =>
+      buildReservationDisplayItems(
+        state.items,
+        today,
+        currentKoreaTime.hour,
+      ),
+    [currentKoreaTime.hour, state.items, today],
+  );
+  const displayItems = useMemo(
+    () => reservationItems.filter((item) => item.isVisible),
+    [reservationItems],
+  );
+  const todayItems = useMemo(
+    () => reservationItems.filter((item) => item.date === today),
+    [reservationItems, today],
+  );
+  const todayCancelableItems = useMemo(
+    () => todayItems.filter((item) => item.cancelableRange !== null),
+    [todayItems],
+  );
+  const hasTodayPartialCancellation = todayItems.some(
+    (item) => item.cancelableRange === null || item.requiresPartialCancellationWarning,
+  );
 
-  const handleCancel = async (item: MergedReservation) => {
+  const handleCancel = async (item: ReservationDisplayItem) => {
+    if (!item.cancelableRange) {
+      return;
+    }
+
+    if (
+      item.requiresPartialCancellationWarning &&
+      !window.confirm(getPartialCancellationMessage("single"))
+    ) {
+      return;
+    }
+
     setSubmittingKey(item.key);
 
     try {
       await cancelReservation(session, {
         roomId: item.roomId,
         date: item.date,
-        fromTime: item.fromTime,
-        toTime: item.toTime,
+        fromTime: item.cancelableRange.fromTime,
+        toTime: item.cancelableRange.toTime,
       });
       await loadItems();
     } catch (error) {
@@ -773,23 +817,33 @@ function MyReservationsTab({
   };
 
   const handleCancelToday = async () => {
-    if (todayItems.length === 0) {
+    if (todayCancelableItems.length === 0) {
       return;
     }
 
-    if (!window.confirm("오늘의 예약을 모두 취소할까요?")) {
+    const confirmed = window.confirm(
+      hasTodayPartialCancellation
+        ? getPartialCancellationMessage("all")
+        : "오늘의 예약을 모두 취소할까요?",
+    );
+
+    if (!confirmed) {
       return;
     }
 
     setSubmittingKey("today-all");
 
     try {
-      for (const item of todayItems) {
+      for (const item of todayCancelableItems) {
+        if (!item.cancelableRange) {
+          continue;
+        }
+
         await cancelReservation(session, {
           roomId: item.roomId,
           date: item.date,
-          fromTime: item.fromTime,
-          toTime: item.toTime,
+          fromTime: item.cancelableRange.fromTime,
+          toTime: item.cancelableRange.toTime,
         });
       }
 
@@ -817,9 +871,9 @@ function MyReservationsTab({
           <h2>예정된 예약</h2>
         </div>
         <button
-          className="secondary-button"
+          className="danger-button"
           type="button"
-          disabled={todayItems.length === 0 || submittingKey === "today-all"}
+          disabled={todayCancelableItems.length === 0 || submittingKey === "today-all"}
           onClick={() => void handleCancelToday()}
         >
           {submittingKey === "today-all" ? "취소 중..." : "오늘 예약 전체 취소"}
@@ -828,26 +882,36 @@ function MyReservationsTab({
 
       {state.loading ? <p className="muted">예약 목록을 불러오는 중입니다...</p> : null}
       {state.error ? <p className="error-text">{state.error}</p> : null}
-      {!state.loading && mergedItems.length === 0 ? (
+      {!state.loading && displayItems.length === 0 ? (
         <p className="muted">예정된 예약이 없습니다.</p>
       ) : null}
 
       <div className="list-stack">
-        {mergedItems.map((item) => (
+        {displayItems.map((item) => (
           <article key={item.key} className="reservation-card">
             <div>
               <p className="room-name">{item.roomId}호</p>
               <p className="muted">{formatDateHeading(item.date)}</p>
               <p>{formatRangeLabel(item.fromTime, item.toTime)}</p>
+              {item.cancelableRange === null && item.date === today ? (
+                <p className="muted">이미 시작된 예약은 취소할 수 없습니다.</p>
+              ) : null}
+              {item.requiresPartialCancellationWarning ? (
+                <p className="muted">
+                  취소 시 아직 시작되지 않은 시간만 취소됩니다.
+                </p>
+              ) : null}
             </div>
-            <button
-              className="secondary-button"
-              type="button"
-              disabled={submittingKey === item.key}
-              onClick={() => void handleCancel(item)}
-            >
-              {submittingKey === item.key ? "취소 중..." : "취소"}
-            </button>
+            {item.cancelableRange ? (
+              <button
+                className="secondary-button"
+                type="button"
+                disabled={submittingKey === item.key}
+                onClick={() => void handleCancel(item)}
+              >
+                {submittingKey === item.key ? "취소 중..." : "취소"}
+              </button>
+            ) : null}
           </article>
         ))}
       </div>

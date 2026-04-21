@@ -87,3 +87,13 @@ export type MergedReservation = {
   status: number;
 };
 
+export type CancelableReservationRange = {
+  fromTime: number;
+  toTime: number;
+};
+
+export type ReservationDisplayItem = MergedReservation & {
+  isVisible: boolean;
+  cancelableRange: CancelableReservationRange | null;
+  requiresPartialCancellationWarning: boolean;
+};

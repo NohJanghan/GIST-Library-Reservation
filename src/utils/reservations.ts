@@ -1,7 +1,9 @@
 import type {
+  CancelableReservationRange,
   FacilityGroup,
   FacilityRoom,
   MergedReservation,
+  ReservationDisplayItem,
   ReservationItem,
 } from "../types";
 
@@ -108,4 +110,52 @@ export function mergeReservationItems(items: ReservationItem[]) {
   }
 
   return merged;
+}
+
+export function getCancelableRangeForToday(
+  item: MergedReservation,
+  currentHour: number,
+): CancelableReservationRange | null {
+  const fromTime = Math.max(item.fromTime, currentHour + 1);
+
+  if (fromTime > item.toTime) {
+    return null;
+  }
+
+  return {
+    fromTime,
+    toTime: item.toTime,
+  };
+}
+
+export function buildReservationDisplayItems(
+  items: ReservationItem[],
+  today: string,
+  currentHour: number,
+): ReservationDisplayItem[] {
+  return mergeReservationItems(items).map((item) => {
+    if (item.date !== today) {
+      return {
+        ...item,
+        isVisible: true,
+        cancelableRange: {
+          fromTime: item.fromTime,
+          toTime: item.toTime,
+        },
+        requiresPartialCancellationWarning: false,
+      };
+    }
+
+    const cancelableRange = getCancelableRangeForToday(item, currentHour);
+
+    return {
+      ...item,
+      isVisible: item.toTime >= currentHour,
+      cancelableRange,
+      requiresPartialCancellationWarning:
+        cancelableRange !== null &&
+        (cancelableRange.fromTime !== item.fromTime ||
+          cancelableRange.toTime !== item.toTime),
+    };
+  });
 }

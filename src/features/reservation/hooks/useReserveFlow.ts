@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getFacility } from "../../../shared/api/facility";
 import { createReservation } from "../../../shared/api/reservations";
 import { useKoreaClock } from "../../../shared/hooks/useKoreaClock";
@@ -24,10 +24,12 @@ const DATE_WINDOW_DAYS = 7;
 export function useReserveFlow(
   session: AuthState,
   onUnauthorized: () => void,
+  resetKey = 0,
 ) {
   const clock = useKoreaClock();
   const dateOptions = getDateOptions(DATE_WINDOW_DAYS, clock.now);
   const firstDate = dateOptions[0] ?? clock.today;
+  const previousResetKey = useRef(resetKey);
   const [facilityResponse, setFacilityResponse] = useState<FacilityResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [loadingError, setLoadingError] = useState<string | null>(null);
@@ -40,6 +42,24 @@ export function useReserveFlow(
     error: null,
     success: null,
   });
+
+  useEffect(() => {
+    if (previousResetKey.current === resetKey) {
+      return;
+    }
+
+    previousResetKey.current = resetKey;
+    setState({
+      stage: "date",
+      selectedDate: clock.today,
+      selectedRange: null,
+      error: null,
+      success: null,
+    });
+    setRangeSelectionMode("start");
+    setLoadingError(null);
+    setSubmittingGroupId(null);
+  }, [clock.today, resetKey]);
 
   useEffect(() => {
     let active = true;

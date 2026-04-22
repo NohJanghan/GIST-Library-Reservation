@@ -10,12 +10,23 @@ type TabId = "reserve" | "myReservations";
 function App() {
   const { session, loginState, loginWithCredentials, logout } = useSession();
   const [activeTab, setActiveTab] = useState<TabId>("reserve");
+  const [reserveResetKey, setReserveResetKey] = useState(0);
   const configurationError = getConfigurationError();
 
   const handleUnauthorized = useCallback(() => {
     logout();
     setActiveTab("reserve");
   }, [logout]);
+
+  const handleSelectReserveTab = useCallback(() => {
+    setActiveTab((current) => {
+      if (current === "reserve") {
+        setReserveResetKey((value) => value + 1);
+      }
+
+      return "reserve";
+    });
+  }, []);
 
   if (configurationError) {
     return (
@@ -66,7 +77,7 @@ function App() {
           <button
             type="button"
             className={activeTab === "reserve" ? "tab active" : "tab"}
-            onClick={() => setActiveTab("reserve")}
+            onClick={handleSelectReserveTab}
           >
             예약
           </button>
@@ -84,6 +95,7 @@ function App() {
             session={session}
             onUnauthorized={handleUnauthorized}
             onOpenMyReservations={() => setActiveTab("myReservations")}
+            resetKey={reserveResetKey}
           />
         ) : (
           <MyReservationsTab

@@ -17,14 +17,16 @@ type ReserveTabProps = {
   session: AuthState;
   onUnauthorized: () => void;
   onOpenMyReservations: () => void;
+  resetKey: number;
 };
 
 export function ReserveTab({
   session,
   onUnauthorized,
   onOpenMyReservations,
+  resetKey,
 }: ReserveTabProps) {
-  const flow = useReserveFlow(session, onUnauthorized);
+  const flow = useReserveFlow(session, onUnauthorized, resetKey);
   const { columnCount, gridRef } = useGridColumnCount();
   const normalizedRange = flow.normalizedRange;
   const hourOptions = getVisibleHourOptions({
@@ -84,23 +86,8 @@ export function ReserveTab({
     return (
       <>
         <section className="section">
-          <div className="section-head">
-            <div>
-              <p className="eyebrow">예약</p>
-              <h2>{formatDateHeading(flow.state.selectedDate)}</h2>
-            </div>
-            <button
-              className="secondary-button"
-              type="button"
-              onClick={flow.goBackToDateSelection}
-            >
-              날짜 변경
-            </button>
-          </div>
-
-          <div className="info-card">
-            <p>남은 예약 가능 시간</p>
-            <strong>{flow.maxSelectableHours}시간</strong>
+          <div>
+            <h2>{formatDateHeading(flow.state.selectedDate)}</h2>
           </div>
 
           <div ref={gridRef} className="time-grid">

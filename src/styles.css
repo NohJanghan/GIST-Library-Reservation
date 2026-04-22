@@ -63,6 +63,41 @@ button {
   gap: 12px;
 }
 
+.top-bar {
+  align-items: flex-start;
+}
+
+.top-bar-copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.top-bar-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.top-bar-action {
+  appearance: none;
+  flex-shrink: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #475569;
+  font: inherit;
+  font-size: 0.875rem;
+  line-height: 1.2;
+  font-weight: 400;
+  text-decoration: underline;
+  text-underline-offset: 0.16em;
+  text-decoration-thickness: 1px;
+  box-shadow: none;
+}
+
 .tab-bar {
   margin: 20px 0 24px;
   padding: 4px;

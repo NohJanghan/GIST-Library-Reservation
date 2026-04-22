@@ -47,7 +47,6 @@ export function MyReservationsTab({
     <section className="section">
       <div className="section-head">
         <div>
-          <p className="eyebrow">내 예약</p>
           <h2>예정된 예약</h2>
         </div>
         <button

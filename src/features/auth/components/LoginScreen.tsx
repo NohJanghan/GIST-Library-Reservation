@@ -21,11 +21,7 @@ export function LoginScreen({
 
   return (
     <section className="panel narrow-panel">
-      <p className="eyebrow">최초 1회 로그인</p>
       <h1>GIST 도서관 계정으로 로그인</h1>
-      <p className="muted">
-        로그인 후에는 같은 브라우저에서 세션이 유지됩니다.
-      </p>
       <form className="stack" onSubmit={(event) => void handleSubmit(event)}>
         <label className="field">
           <span>아이디</span>

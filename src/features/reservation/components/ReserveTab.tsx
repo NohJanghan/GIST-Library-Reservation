@@ -32,14 +32,12 @@ export function ReserveTab({
 
   if (flow.state.stage === "date") {
     return (
-      <section className="section">
-        <div className="section-head">
-          <div>
-            <p className="eyebrow">예약</p>
-            <h2>날짜 선택</h2>
+        <section className="section">
+          <div className="section-head">
+            <div>
+              <h2>날짜 선택</h2>
+            </div>
           </div>
-          <span className="muted">최대 7일</span>
-        </div>
         <div className="date-grid">
           {flow.dateOptions.map((dateKey) => {
             const disabled = flow.blockedDates.includes(dateKey);
@@ -138,7 +136,6 @@ export function ReserveTab({
         <section className="section">
           <div className="section-head">
             <div>
-              <p className="eyebrow">예약</p>
               <h2>스터디룸 선택</h2>
             </div>
           </div>

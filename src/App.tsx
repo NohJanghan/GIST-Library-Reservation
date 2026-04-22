@@ -47,17 +47,19 @@ function App() {
     <div className="app-shell">
       <div className="panel app-panel">
         <header className="top-bar">
-          <div>
-            <p className="eyebrow">GIST Library Reservation</p>
+          <div className="top-bar-copy">
+            <div className="top-bar-meta">
+              <p className="eyebrow">GIST Library Reservation</p>
+              <button
+                className="top-bar-action"
+                type="button"
+                onClick={handleUnauthorized}
+              >
+                로그아웃
+              </button>
+            </div>
             <h1>스터디룸 예약</h1>
           </div>
-          <button
-            className="secondary-button"
-            type="button"
-            onClick={handleUnauthorized}
-          >
-            로그아웃
-          </button>
         </header>
 
         <nav className="tab-bar" aria-label="주요 탭">

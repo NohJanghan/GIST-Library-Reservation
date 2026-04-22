@@ -232,6 +232,14 @@ button {
   color: #ffffff;
 }
 
+.selection-status {
+  min-height: 1.5em;
+}
+
+.selection-status-mobile {
+  display: none;
+}
+
 .info-card,
 .room-card,
 .reservation-card {
@@ -322,5 +330,13 @@ code {
 
   .tab-bar {
     margin-top: 16px;
+  }
+
+  .selection-status-desktop {
+    display: none;
+  }
+
+  .selection-status-mobile {
+    display: block;
   }
 }

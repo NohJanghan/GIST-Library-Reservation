@@ -115,12 +115,17 @@ export function ReserveTab({
           </div>
 
           {normalizedRange ? (
-            <p className="muted">
-              선택 시간:{" "}
-              {formatRangeLabel(normalizedRange[0], normalizedRange[1])}
-            </p>
+            <>
+              <p className="muted selection-status selection-status-desktop">
+                선택 시간: {formatRangeLabel(normalizedRange[0], normalizedRange[1])} · 예약
+                가능: {flow.maxSelectableHours}시간
+              </p>
+              <p className="muted selection-status selection-status-mobile">
+                선택 시간: {formatRangeLabel(normalizedRange[0], normalizedRange[1])}
+              </p>
+            </>
           ) : (
-            <p className="muted">첫 클릭은 시작 시간, 두 번째 클릭은 종료 시간입니다.</p>
+            <p className="muted selection-status">예약 가능: {flow.maxSelectableHours}시간</p>
           )}
           {flow.state.error ? <p className="error-text">{flow.state.error}</p> : null}
         </section>

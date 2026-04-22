@@ -3,6 +3,7 @@ import {
   findFirstAvailableRoom,
   getCancelableRangeForToday,
   getMaxSelectableHours,
+  getVisibleHourOptions,
   isRoomAvailableForRange,
   mergeReservationItems,
 } from "../../../src/shared/lib/reservations";
@@ -40,6 +41,64 @@ describe("shared/lib/reservations", () => {
   it("calculates the remaining selectable hours", () => {
     expect(getMaxSelectableHours(1, 10, 4, 80)).toBe(3);
     expect(getMaxSelectableHours(4, 10, 4, 80)).toBe(0);
+  });
+
+  it("shows only the minimum rows needed for future hours on today", () => {
+    expect(
+      getVisibleHourOptions({
+        start: 8,
+        end: 23,
+        isToday: true,
+        nextReservableHour: 22,
+        columnCount: 5,
+      }),
+    ).toEqual([19, 20, 21, 22, 23]);
+
+    expect(
+      getVisibleHourOptions({
+        start: 8,
+        end: 23,
+        isToday: true,
+        nextReservableHour: 19,
+        columnCount: 3,
+      }),
+    ).toEqual([18, 19, 20, 21, 22, 23]);
+  });
+
+  it("keeps the range within operating hours when filler slots run out", () => {
+    expect(
+      getVisibleHourOptions({
+        start: 21,
+        end: 23,
+        isToday: true,
+        nextReservableHour: 23,
+        columnCount: 5,
+      }),
+    ).toEqual([21, 22, 23]);
+  });
+
+  it("falls back to the last row when there are no future hours today", () => {
+    expect(
+      getVisibleHourOptions({
+        start: 8,
+        end: 23,
+        isToday: true,
+        nextReservableHour: 24,
+        columnCount: 5,
+      }),
+    ).toEqual([19, 20, 21, 22, 23]);
+  });
+
+  it("keeps all operating hours visible for future dates", () => {
+    expect(
+      getVisibleHourOptions({
+        start: 8,
+        end: 12,
+        isToday: false,
+        nextReservableHour: 11,
+        columnCount: 3,
+      }),
+    ).toEqual([8, 9, 10, 11, 12]);
   });
 
   it("merges slot rows into display ranges and computes partial cancellation", () => {

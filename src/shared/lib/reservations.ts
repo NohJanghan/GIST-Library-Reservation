@@ -39,6 +39,53 @@ export function getMaxSelectableHours(
   );
 }
 
+type VisibleHourOptionsParams = {
+  start: number;
+  end: number;
+  isToday: boolean;
+  nextReservableHour: number;
+  columnCount: number;
+};
+
+export function getVisibleHourOptions({
+  start,
+  end,
+  isToday,
+  nextReservableHour,
+  columnCount,
+}: VisibleHourOptionsParams) {
+  const safeColumnCount = Math.max(1, columnCount);
+  const allHours = Array.from(
+    { length: end - start + 1 },
+    (_, index) => start + index,
+  );
+
+  if (!isToday) {
+    return allHours;
+  }
+
+  const futureStart = Math.max(start, nextReservableHour);
+
+  if (futureStart > end) {
+    const visibleStart = Math.max(start, end - safeColumnCount + 1);
+    return Array.from(
+      { length: end - visibleStart + 1 },
+      (_, index) => visibleStart + index,
+    );
+  }
+
+  const futureCount = end - futureStart + 1;
+  const rowCount = Math.ceil(futureCount / safeColumnCount);
+  const visibleCount = rowCount * safeColumnCount;
+  const fillerCount = visibleCount - futureCount;
+  const visibleStart = Math.max(start, futureStart - fillerCount);
+
+  return Array.from(
+    { length: end - visibleStart + 1 },
+    (_, index) => visibleStart + index,
+  );
+}
+
 export function normalizeRange(range: ReservationRange): ReservationRange {
   return range[0] <= range[1] ? range : [range[1], range[0]];
 }

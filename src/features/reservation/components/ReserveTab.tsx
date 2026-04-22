@@ -5,7 +5,11 @@ import {
   formatRangeLabel,
   getKoreanWeekday,
 } from "../../../shared/lib/date";
-import { findFirstAvailableRoom } from "../../../shared/lib/reservations";
+import { useGridColumnCount } from "../../../shared/hooks/useGridColumnCount";
+import {
+  findFirstAvailableRoom,
+  getVisibleHourOptions,
+} from "../../../shared/lib/reservations";
 import type { AuthState } from "../../../shared/types";
 import { useReserveFlow } from "../hooks/useReserveFlow";
 
@@ -21,14 +25,15 @@ export function ReserveTab({
   onOpenMyReservations,
 }: ReserveTabProps) {
   const flow = useReserveFlow(session, onUnauthorized);
+  const { columnCount, gridRef } = useGridColumnCount();
   const normalizedRange = flow.normalizedRange;
-  const hourOptions = Array.from(
-    {
-      length:
-        flow.selectableHourRange.end - flow.selectableHourRange.start + 1,
-    },
-    (_, index) => flow.selectableHourRange.start + index,
-  );
+  const hourOptions = getVisibleHourOptions({
+    start: flow.selectableHourRange.start,
+    end: flow.selectableHourRange.end,
+    isToday: flow.isSelectedDateToday,
+    nextReservableHour: flow.nextReservableHour,
+    columnCount,
+  });
 
   if (flow.state.stage === "date") {
     return (
@@ -98,7 +103,7 @@ export function ReserveTab({
             <strong>{flow.maxSelectableHours}시간</strong>
           </div>
 
-          <div className="time-grid">
+          <div ref={gridRef} className="time-grid">
             {hourOptions.map((hour) => {
               const selected =
                 normalizedRange &&

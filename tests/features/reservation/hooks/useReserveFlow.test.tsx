@@ -76,6 +76,10 @@ const facilityResponse: FacilityResponse = {
 };
 
 describe("useReserveFlow", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
   it("loads facility data, supports date changes, and updates time selection state", async () => {
     vi.mocked(getFacility).mockResolvedValue(facilityResponse);
     const onUnauthorized = vi.fn();
@@ -174,8 +178,13 @@ describe("useReserveFlow", () => {
       await result.current.reserve(facilityResponse.facilityGroup[0]);
     });
 
+    await waitFor(() => {
+      expect(getFacility).toHaveBeenCalledTimes(2);
+    });
+    expect(getFacility).toHaveBeenLastCalledWith(session, "20260422");
     expect(result.current.state.stage).toBe("date");
     expect(result.current.state.error).toBe("예약 조건이 바뀌었습니다. 다시 선택해주세요.");
+    expect(result.current.facilityResponse).toEqual(facilityResponse);
   });
 
   it("forwards 401 responses to the unauthorized handler", async () => {

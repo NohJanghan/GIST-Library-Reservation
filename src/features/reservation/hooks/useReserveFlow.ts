@@ -31,6 +31,7 @@ export function useReserveFlow(
   const firstDate = dateOptions[0] ?? clock.today;
   const previousResetKey = useRef(resetKey);
   const [facilityResponse, setFacilityResponse] = useState<FacilityResponse | null>(null);
+  const [facilityReloadKey, setFacilityReloadKey] = useState(0);
   const [loading, setLoading] = useState(false);
   const [loadingError, setLoadingError] = useState<string | null>(null);
   const [submittingGroupId, setSubmittingGroupId] = useState<number | null>(null);
@@ -67,6 +68,7 @@ export function useReserveFlow(
     async function loadFacility() {
       setLoading(true);
       setLoadingError(null);
+      setFacilityResponse(null);
 
       try {
         const next = await getFacility(session, state.selectedDate);
@@ -102,7 +104,7 @@ export function useReserveFlow(
     return () => {
       active = false;
     };
-  }, [onUnauthorized, session, state.selectedDate]);
+  }, [facilityReloadKey, onUnauthorized, session, state.selectedDate]);
 
   const blockedDates = facilityResponse?.commonFacilityInfo.notAvailableDays ?? [];
   const lastDate = dateOptions[dateOptions.length - 1] ?? state.selectedDate;
@@ -250,6 +252,7 @@ export function useReserveFlow(
         return;
       }
 
+      setFacilityReloadKey((current) => current + 1);
       setState((current) => ({
         ...current,
         stage: "date",

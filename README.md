@@ -22,6 +22,7 @@ VITE_API_BASE_URL=https://your-backend-host.example.com
 npm install
 npm run dev
 npm run build
+npm test
 ```
 
 ## Implemented Scope
@@ -37,3 +38,9 @@ npm run build
 - Date and time handling is normalized to `Asia/Seoul`.
 - Refresh token flow is intentionally not implemented yet.
 
+## Structure
+
+- `src/features/auth`: 로그인과 세션 관리
+- `src/features/reservation`: 예약 플로우
+- `src/features/my-reservations`: 예약 목록과 취소
+- `src/shared`: API, 공용 타입, 날짜/예약 유틸

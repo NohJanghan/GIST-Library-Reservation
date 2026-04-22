@@ -5,11 +5,14 @@ import type {
   MergedReservation,
   ReservationDisplayItem,
   ReservationItem,
+  ReservationRange,
 } from "../types";
+
+const DEFAULT_SELECTABLE_HOUR_RANGE = { start: 8, end: 23 };
 
 export function getSelectableHourRange(groups: FacilityGroup[]) {
   if (groups.length === 0) {
-    return { start: 8, end: 23 };
+    return DEFAULT_SELECTABLE_HOUR_RANGE;
   }
 
   return groups.reduce(
@@ -36,10 +39,19 @@ export function getMaxSelectableHours(
   );
 }
 
+export function normalizeRange(range: ReservationRange): ReservationRange {
+  return range[0] <= range[1] ? range : [range[1], range[0]];
+}
+
+export function getRangeLength(range: ReservationRange) {
+  const [fromTime, toTime] = normalizeRange(range);
+  return toTime - fromTime + 1;
+}
+
 export function isRoomAvailableForRange(
   room: FacilityRoom,
   group: FacilityGroup,
-  selectedRange: [number, number],
+  selectedRange: ReservationRange,
 ) {
   const [fromTime, toTime] = normalizeRange(selectedRange);
 
@@ -61,18 +73,32 @@ export function isRoomAvailableForRange(
 
 export function findFirstAvailableRoom(
   group: FacilityGroup,
-  selectedRange: [number, number],
+  selectedRange: ReservationRange,
 ) {
   const rooms = [...group.facilities].sort((left, right) => left.id - right.id);
   return rooms.find((room) => isRoomAvailableForRange(room, group, selectedRange));
 }
 
-export function normalizeRange(range: [number, number]): [number, number] {
-  return range[0] <= range[1] ? range : [range[1], range[0]];
+export function splitFacilityGroupsByAvailability(
+  groups: FacilityGroup[],
+  selectedRange: ReservationRange,
+) {
+  return groups.reduce(
+    (result, group) => {
+      if (findFirstAvailableRoom(group, selectedRange)) {
+        result.activeGroups.push(group);
+      } else {
+        result.inactiveGroups.push(group);
+      }
+
+      return result;
+    },
+    { activeGroups: [] as FacilityGroup[], inactiveGroups: [] as FacilityGroup[] },
+  );
 }
 
-export function mergeReservationItems(items: ReservationItem[]) {
-  const sorted = [...items].sort((left, right) => {
+export function sortReservationItems(items: ReservationItem[]) {
+  return [...items].sort((left, right) => {
     if (left.date !== right.date) {
       return left.date.localeCompare(right.date);
     }
@@ -83,10 +109,12 @@ export function mergeReservationItems(items: ReservationItem[]) {
 
     return left.fromTime - right.fromTime;
   });
+}
 
+export function mergeReservationItems(items: ReservationItem[]) {
   const merged: MergedReservation[] = [];
 
-  for (const item of sorted) {
+  for (const item of sortReservationItems(items)) {
     const last = merged[merged.length - 1];
 
     if (

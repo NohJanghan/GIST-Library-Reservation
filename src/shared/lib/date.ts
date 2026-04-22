@@ -11,7 +11,7 @@ export type KoreaTimeParts = {
   minute: number;
 };
 
-function getFormatter() {
+function getDateFormatter() {
   return new Intl.DateTimeFormat("en-CA", {
     timeZone: KOREA_TIME_ZONE,
     year: "numeric",
@@ -20,8 +20,18 @@ function getFormatter() {
   });
 }
 
+function getTimeFormatter() {
+  return new Intl.DateTimeFormat("en-GB", {
+    timeZone: KOREA_TIME_ZONE,
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
+}
+
 function getPartValue(parts: Intl.DateTimeFormatPart[], type: string) {
   const part = parts.find((item) => item.type === type);
+
   if (!part) {
     throw new Error(`Missing ${type} date part`);
   }
@@ -29,12 +39,8 @@ function getPartValue(parts: Intl.DateTimeFormatPart[], type: string) {
   return Number(part.value);
 }
 
-export function getTodayDateKey() {
-  return formatDateKeyFromDate(new Date());
-}
-
 export function formatDateKeyFromDate(date: Date) {
-  const parts = getFormatter().formatToParts(date);
+  const parts = getDateFormatter().formatToParts(date);
   const year = getPartValue(parts, "year");
   const month = getPartValue(parts, "month");
   const day = getPartValue(parts, "day");
@@ -43,6 +49,10 @@ export function formatDateKeyFromDate(date: Date) {
     2,
     "0",
   )}`;
+}
+
+export function getTodayDateKey(date = new Date()) {
+  return formatDateKeyFromDate(date);
 }
 
 export function parseDateKey(dateKey: string): DateParts {
@@ -71,31 +81,17 @@ export function addDaysToDateKey(dateKey: string, days: number) {
   return utcDateToDateKey(next);
 }
 
-export function dateKeyToInputValue(dateKey: string) {
-  return `${dateKey.slice(0, 4)}-${dateKey.slice(4, 6)}-${dateKey.slice(6, 8)}`;
-}
-
-export function inputValueToDateKey(inputValue: string) {
-  return inputValue.split("-").join("");
-}
-
 export function compareDateKeys(left: string, right: string) {
   return left.localeCompare(right);
 }
 
-export function getDateOptions(days: number) {
-  const today = getTodayDateKey();
-
+export function getDateOptions(days: number, date = new Date()) {
+  const today = getTodayDateKey(date);
   return Array.from({ length: days }, (_, index) => addDaysToDateKey(today, index));
 }
 
-export function getCurrentKoreaTimeParts(): KoreaTimeParts {
-  const parts = new Intl.DateTimeFormat("en-GB", {
-    timeZone: KOREA_TIME_ZONE,
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-  }).formatToParts(new Date());
+export function getCurrentKoreaTimeParts(date = new Date()): KoreaTimeParts {
+  const parts = getTimeFormatter().formatToParts(date);
 
   return {
     hour: getPartValue(parts, "hour"),
@@ -103,8 +99,8 @@ export function getCurrentKoreaTimeParts(): KoreaTimeParts {
   };
 }
 
-export function getNextReservableHour() {
-  return getCurrentKoreaTimeParts().hour + 1;
+export function getNextReservableHour(date = new Date()) {
+  return getCurrentKoreaTimeParts(date).hour + 1;
 }
 
 export function getKoreanWeekday(dateKey: string) {
@@ -133,8 +129,8 @@ export function formatRangeLabel(fromTime: number, toTime: number) {
   return `${formatHourLabel(fromTime)} - ${formatHourLabel(toTime + 1)}`;
 }
 
-export function isToday(dateKey: string) {
-  return getTodayDateKey() === dateKey;
+export function isToday(dateKey: string, date = new Date()) {
+  return getTodayDateKey(date) === dateKey;
 }
 
 export function isDateWithinRange(

@@ -133,7 +133,9 @@ export function ReserveTab({
         <section className="section">
           <div className="section-head">
             <div>
-              <h2>스터디룸 선택</h2>
+              <h2 className={!normalizedRange ? "section-title-muted" : undefined}>
+                스터디룸 선택
+              </h2>
             </div>
           </div>
 

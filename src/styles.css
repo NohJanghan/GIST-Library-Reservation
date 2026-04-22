@@ -233,6 +233,11 @@ button {
   justify-content: space-between;
 }
 
+.time-chip {
+  min-height: 56px;
+  padding: 10px 12px;
+}
+
 .date-chip.active,
 .time-chip.active {
   border-color: #111827;
@@ -292,6 +297,10 @@ p {
 
 .muted {
   color: #64748b;
+}
+
+.section-title-muted {
+  color: #94a3b8;
 }
 
 .error-text {
@@ -375,5 +384,16 @@ code {
 
   .selection-status-mobile {
     display: block;
+  }
+
+  .time-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .time-chip {
+    min-height: 52px;
+    padding: 8px 6px;
+    font-size: 0.9375rem;
   }
 }
